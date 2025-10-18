@@ -1,1 +1,8 @@
+# finetune
+finetune/results/
+
+unsloth_compiled_cache/
+
+
 rena-core-proxy/rena-core/
+

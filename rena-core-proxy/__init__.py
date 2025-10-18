@@ -28,9 +28,9 @@ def read_last_line(path: Path) -> str:
         return lines[-1]
     return ""
 
-def run_query_baseline(rena_port: int, model: str, url: str, tool_name: str, query: str) -> str:
+def run_query_baseline(rena_port: int, model: str, url: str, category: str, query: str) -> str:
     # get temp config file content
-    template_path = ROOT_DIR / "config" / tool_name / "browserd_template_baseline.txt"
+    template_path = ROOT_DIR / "config" / category / "browserd_template_baseline.txt"
     with open(template_path, "r") as f:
         template = Template(f.read())
     mapping = {
@@ -94,9 +94,9 @@ def run_query_baseline(rena_port: int, model: str, url: str, tool_name: str, que
             final_last_line = read_last_line(traj_path)
             return final_last_line
 
-def run_query_proxy(rena_port: int, proxy_port: int, tool_name: str, query: str) -> str:
+def run_query_proxy(rena_port: int, proxy_port: int, category: str, query: str) -> str:
     # get temp config file content
-    template_path = ROOT_DIR / "config" / tool_name / "browserd_template.txt"
+    template_path = ROOT_DIR / "config" / category / "browserd_template.txt"
     with open(template_path, "r") as f:
         template = Template(f.read())
     mapping = {
@@ -159,7 +159,7 @@ def run_query_proxy(rena_port: int, proxy_port: int, tool_name: str, query: str)
             final_last_line = read_last_line(traj_path)
             return final_last_line
 
-def run_baseline(tool_name, model, url, queries_path, output_path, start=None, end=None):
+def run_baseline(category, model, url, queries_path, output_path, start=None, end=None):
     rena_port, _ = get_comm_ports(2)
     queries_path = Path(queries_path)
     traj_path = Path(output_path)
@@ -180,11 +180,11 @@ def run_baseline(tool_name, model, url, queries_path, output_path, start=None, e
     queries = queries_path.read_text().splitlines()[start:end]
     with open(traj_path, "a") as f:
         for query in queries:
-            traj = run_query_baseline(rena_port, model, url, tool_name, query)
+            traj = run_query_baseline(rena_port, model, url, category, query)
             f.write(traj + "\n")
             f.flush()
 
-def run_proxy(tool_name, queries_path, output_path, classifier_config_path=None, tool_adapters_config_path=None, start=None, end=None):
+def run_proxy(category, queries_path, output_path, classifier_config_path=None, tool_adapters_config_path=None, start=None, end=None):
     rena_port, proxy_port = get_comm_ports(2)
     queries_path = Path(queries_path)
     traj_path = Path(output_path)
@@ -212,6 +212,6 @@ def run_proxy(tool_name, queries_path, output_path, classifier_config_path=None,
         queries = queries_path.read_text().splitlines()[start:end]
         with open(traj_path, "a") as f:
             for query in queries:
-                traj = run_query_proxy(rena_port, proxy_port, tool_name, query)
+                traj = run_query_proxy(rena_port, proxy_port, category, query)
                 f.write(traj + "\n")
                 f.flush()

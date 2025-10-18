@@ -149,7 +149,7 @@ if __name__ == "__main__":
     parser.add_argument("--category", type=str, required=True, help="Category name for MCP Tools")
     args = parser.parse_args()
 
-    results_dir = Path(__file__).parent.parent / "results"
+    results_dir = Path(__file__).parent / "results"
     traj_path = results_dir / "trajectories" / args.category / "all_trajectories.jsonl"
 
     trajs = [json.loads(line) for line in open(traj_path, "r")]
@@ -163,10 +163,10 @@ if __name__ == "__main__":
 
     # train
     train_dir = results_dir / "trajectories" / args.category / "train"
-    write_to_file(cleaned_trains, train_dir / "cleaned_train.jsonl")
+    write_to_file(cleaned_trains, train_dir / "cleaned_train.jsonl")    # used for train classifier
     split_tools_train = split_tools(cleaned_trains)
     tool_adaptors_path = train_dir / "tool_adaptors"
-    for tool_name, tool_trajs in split_tools_train.items():
+    for tool_name, tool_trajs in split_tools_train.items():    # used for train tool adaptors
         write_to_file(tool_trajs, tool_adaptors_path / f"{tool_name}.jsonl")
         print(f"Saved {len(tool_trajs)} training examples for tool {tool_name} to {tool_adaptors_path / f'{tool_name}.jsonl'}")
 
