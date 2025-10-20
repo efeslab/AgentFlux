@@ -163,6 +163,7 @@ def run_baseline(category, model, url, queries_path, output_path, start=None, en
     rena_port, _ = get_comm_ports(2)
     queries_path = Path(queries_path)
     traj_path = Path(output_path)
+    traj_path.parent.mkdir(parents=True, exist_ok=True)
     print(f"traj_path: {traj_path}")
     print(f"queries_path: {queries_path}")
 
@@ -185,9 +186,15 @@ def run_baseline(category, model, url, queries_path, output_path, start=None, en
             f.flush()
 
 def run_proxy(category, queries_path, output_path, classifier_config_path=None, tool_adapters_config_path=None, start=None, end=None):
+    """
+    classifier_config_path: path to classifier config if it's not None, else using gpt as classifier
+    tool_adapters_config_path: path to tool adapters config if it's not None, else using gpt as tool adapters
+    """
+
     rena_port, proxy_port = get_comm_ports(2)
     queries_path = Path(queries_path)
     traj_path = Path(output_path)
+    traj_path.parent.mkdir(parents=True, exist_ok=True)
     print(f"traj_path: {traj_path}")
     print(f"queries_path: {queries_path}")
     print(f"classifier_config_path: {classifier_config_path}")

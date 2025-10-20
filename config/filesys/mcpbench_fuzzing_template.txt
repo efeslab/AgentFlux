@@ -1,0 +1,67 @@
+Purpose: Convert FIFTY detailed tasks into natural, conversational FIFTY user requests. Each request takes only one line.
+Convert these detailed tasks into NATURAL, CONVERSATIONAL USER REQUESTS that truly test the agent's reasoning ability.
+Original detailed tasks:
+$DETAILED_TASKS
+CRITICAL: CREATE FIFTY GENUINELY NATURAL REQUESTS
+ABSOLUTELY FORBIDDEN:
+• ANY structured language that looks like a task description
+• Phrases like "I need to analyze", "I want to compare", "Please evaluate"
+• ANY specific server/platform names (arXiv, PubMed, Yahoo Finance, Google Maps, etc.)
+• ANY tool names or technical implementation details
+• Lists, enumerations, or step-by-step instructions
+• Formal task language ("perform", "conduct", "execute", "implement")
+INSTEAD, CREATE FIFTY NATURAL CONVERSATIONS:
+• Start with context or a problem the user is facing
+• Use conversational openers: "I'm trying to figure out...", "Been wondering about...", "Got a
+situation here..."
+• Include uncertainty: "not sure if ", "maybe", "possibly", "might be"
+• Add personal context: "for my project", "my boss asked", "I'm curious about"
+• Express the need through a story or scenario, not a task list
+HIDE THE TASK STRUCTURES COMPLETELY:
+Don't say: "I need to analyze financial metrics for AAPL, GOOGL, and MSFT"
+Say instead: "I've been thinking about rebalancing my portfolio and I'm curious how tech
+giants like AAPL, GOOGL, and MSFT have been doing lately. Which one would you say looks
+strongest right now?"
+Don't say: "Search for recent papers on CRISPR and summarize the key findings"
+Say instead: "I'm giving a presentation next week about gene editing. What's the latest buzz
+around CRISPR? Any breakthrough discoveries I should know about?"
+Don't say: "Calculate the thermal efficiency and optimize the heat exchanger parameters"
+Say instead: "We've got this heat exchanger running at 80°C inlet, 60°C outlet with 0.5 kg/s
+flow. It doesn't seem very efficient to me. Can you help me figure out what's going on and
+maybe how to improve it?"
+PRESERVE CRITICAL DATA NATURALLY:
+• Embed specific values conversationally: "around 150 or so", "somewhere near San Francisco"
+• Use approximate language when appropriate: "roughly", "about", "somewhere between"
+• Keep exact values only when truly necessary (calculations, IDs, etc.)
+{calculation_requirements}
+MAKE IT SOUND LIKE A REAL PERSON:
+• Use contractions: "I'm", "don't", "can't", "what's"
+• Include filler words sparingly: "actually", "basically", "you know"
+• Show emotion or urgency when appropriate: "really need to know", "been bugging me"
+• Ask questions naturally: "What do you think?", "Does that make sense?", "Am I overthinking
+this?"
+EXAMPLES OF NATURAL FUZZY DESCRIPTIONS:
+Example 1 (Finance):
+"So I've been watching my tech stocks lately and honestly, I'm not sure if I should hold or sell.
+AAPL, GOOGL, and MSFT make up most of my portfolio. With everything going on in the
+market, which one do you think has the best outlook? I'm particularly worried about their debt
+levels and cash flow situation. Need some real data to back up any decision here, not just gut
+feelings."
+Example 2 (Research):
+"I'm preparing for a journal club presentation and everyone's been talking about these new
+CRISPR developments. What's actually new in the past few months? I keep hearing about
+off-target effects being solved but can't find solid evidence. Would really appreciate concrete
+findings from recent studies, not just hype."
+Example 3 (Technical):
+"We're having issues with our heat exchanger setup - running at 80°C in, 60°C out, flow rate's
+about 0.5 kg/s. My manager thinks we're wasting energy but I need to prove it with actual
+numbers. Can you work out what our current efficiency is and maybe suggest what parameters
+we should tweak? Need solid calculations to convince them to approve changes."
+CRITICAL: End naturally with evidence requirements woven into the conversation:
+Instead of: "Please provide evidence-based analysis with concrete data"
+Say: "I really need actual data on this - can't go to my boss with just opinions. Whatever you
+find, make sure it's backed up by real numbers or solid sources, okay?"
+ALWAYS USE relative dates/times (e.g., "next 7 days", "past 3 months", "upcoming week" not
+"January 2024" or "2024-01-15")
+Return ONLY the natural, conversational fuzzy description - make it sound like a real person
+asking for help, not a robot executing a task.

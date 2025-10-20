@@ -45,11 +45,6 @@ def main():
         if Score_ToolOutput >= 8:
             tool_output_num += 1
 
-    # print(f"Average Score: {float((sum(results) / len(results) / 10) * 100 if results else 0):.3f} %")
-    # # print(f"Average Score w.r.t. 0/1: {float((sum(results) / len(results) / 1) * 100 if results else 0):.3f} %")
-    # print(f"Average task fulfillment: {float((sum(results_task_fulfillment) / len(results_task_fulfillment) / 10) * 100 if results_task_fulfillment else 0):.3f} %")
-    # # print(f"Average task fulfillment w.r.t 0/1: {float((sum(results_task_fulfillment) / len(results_task_fulfillment) / 1) * 100 if results_task_fulfillment else 0):.3f} %")
-
     print("Avg score\tAvg task success\tOverall Successfull\tFulfillment\tTool Choice\tTool Output")
     print(f"{(sum(results) / len(results) / 10 * 100 if results else 0):.3f}\t"
         f"{(sum(results_task_fulfillment) / len(results_task_fulfillment) / 10 * 100 if results_task_fulfillment else 0):.3f}\t"
