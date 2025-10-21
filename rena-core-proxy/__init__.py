@@ -1,14 +1,13 @@
 import os
-import sys
 import socket
 import subprocess
 from pathlib import Path
 from string import Template
 from typing import List
-import argparse
 import tempfile
 import json
-import hashlib
+
+from rena_proxy import start_proxy
 
 ROOT_DIR = Path(__file__).parent.parent
 
@@ -195,6 +194,7 @@ def run_proxy(category, queries_path, output_path, classifier_config_path=None, 
     queries_path = Path(queries_path)
     traj_path = Path(output_path)
     traj_path.parent.mkdir(parents=True, exist_ok=True)
+    tool_list = ROOT_DIR / "config" / category / "tool_list.json"
     print(f"traj_path: {traj_path}")
     print(f"queries_path: {queries_path}")
     print(f"classifier_config_path: {classifier_config_path}")
@@ -213,8 +213,10 @@ def run_proxy(category, queries_path, output_path, classifier_config_path=None, 
 
     with start_proxy(
         port=proxy_port,
-        classifier_config_path=classifier_config_path,
-        tool_adapters_config_path=tool_adapters_config_path,
+        category=category,
+        tool_list=tool_list,
+        classifier=classifier_config_path,
+        tool_adapters=tool_adapters_config_path,
     ) as proxier:
         queries = queries_path.read_text().splitlines()[start:end]
         with open(traj_path, "a") as f:
