@@ -12,7 +12,7 @@ for file in "$train_dir"/*.jsonl; do
 
   train_json_file_path="./$category/results/trajectories/train/tool_adaptors/$tool_name.jsonl"
   eval_json_file_path="./$category/results/trajectories/eval/tool_adaptors/$tool_name.jsonl"
-  chat_template_path="./$category/results/chat_templates/tool_adaptors/$tool_name.jinja"
+  chat_template_path="./base_models/Qwen2.5-7B-Instruct/$category/$tool_name.jinja"
   output_dir="./$category/results/finetune_output/tool_adaptors/$tool_name"
   log_file_path="./$category/results/log/tool_adaptors/$tool_name.log"
 
@@ -59,4 +59,10 @@ for file in "$train_dir"/*.jsonl; do
     --validation_json_file $eval_json_file_path \
     --chat_template_path "$chat_template_path" \
     2>&1 | tee "$log_file_path"
+  
+  # copy the content of second epoch's output to a separate folder for easy access
+  epoch_2_dir="./$category/results/finetune_serve/$tool_name"
+  mkdir -p "$epoch_2_dir"
+  cp -r "$output_dir/checkpoint-$(($steps_per_epoch * 2))/"* "$epoch_2_dir/"
+
 done

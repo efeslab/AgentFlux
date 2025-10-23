@@ -49,6 +49,7 @@ def clean_dataset(trajs: list[dict], tokenizer) -> list[dict]:
             try:
                 _ = Dataset.from_list(data_json)
             except Exception as e:
+                print(e)
                 pass
             else:
                 return None

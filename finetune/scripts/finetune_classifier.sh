@@ -7,7 +7,7 @@ num_train_epochs=${4:-4}
 
 train_data_path="./$category/results/trajectories/train/cleaned_train.jsonl"
 validation_data_path="./$category/results/trajectories/eval/cleaned_eval.jsonl"
-chat_template_path="./classifier.jinja"
+chat_template_path="./base_models/Qwen2.5-7B-Instruct/classifier.jinja"
 output_dir="./$category/results/finetune_output/classifier"
 log_path="./$category/results/log/classifier.log"
 
@@ -55,3 +55,8 @@ python unsloth-cli-split.py \
  --chat_template_path $chat_template_path \
  --per_device_eval_batch_size 1 \
  2>&1 | tee $log_path
+
+# copy the content of second epoch's output to a separate folder for easy access
+epoch_2_dir="./$category/results/finetune_serve/classifier"
+mkdir -p "$epoch_2_dir"
+cp -r "$output_dir/checkpoint-$(($steps_per_epoch * 2))/"* "$epoch_2_dir/"
