@@ -268,7 +268,8 @@ Run the complete finetuning pipeline for a category (e.g., `filesys`, `monday`, 
 
 ```bash
 # Full pipeline: query gen → trajectory collection → training
-bash bash/finetune.sh filesys
+cd finetune
+bash scripts/finetune.sh filesys
 ```
 
 This will:
@@ -276,54 +277,35 @@ This will:
 2. Collect tool-calling trajectories from baseline model
 3. Clean and validate data (argument checking, type validation)
 4. Split into train/eval/test sets (80/10/10)
-5. Train classifier model → `finetune/results/finetune_output/filesys/classifier/`
-6. Train per-tool adapters → `finetune/results/finetune_output/filesys/tool_adaptors/{tool_name}/`
+5. Train classifier model → `finetune/filesys/results/finetune_output/classifier/`
+6. Train per-tool adapters → `finetune/filesys/results/finetune_output/tool_adaptors/{tool_name}/`
 
 **Customization**:
 ```bash
 # Custom hyperparameters: category, batch_size, grad_accumulation, epochs
-bash bash/finetune_classifier.sh filesys 8 2 3
-bash bash/finetune_tool_adaptors.sh filesys 8 2 3
+bash scripts/finetune_classifier.sh filesys 8 2 3
+bash scripts/finetune_tool_adaptors.sh filesys 8 2 3
 ```
 
 **Training Outputs**:
-- Model checkpoints: `finetune/results/finetune_output/{category}/`
-- Training logs: `finetune/results/log/{category}/`
-- Processed data: `finetune/results/trajectories/{category}/`
+- Model checkpoints: `finetune/{category}/results/finetune_output/`
+- Training logs: `finetune/{category}/results/log/`
+- Processed data: `finetune/{category}/results/trajectories/`
 
 #### ⚡ Running AgentFlux Inference
 
 Deploy your finetuned models via the AgentFlux proxy server:
 
 ```bash
-# Start classifier model server (port 8001)
-vllm serve finetune/results/finetune_output/filesys/classifier/ \
-  --port 8001 \
-  --enable-auto-tool-choice \
-  --tool-call-parser hermes
+# Start finetuned model server (both finetuned and classifier)
+cd ../inference/agentflux
+bash scripts/vllm.sh &
 
-# Start tool adapter servers (one per tool)
-vllm serve finetune/results/finetune_output/filesys/tool_adaptors/read_file/ \
-  --port 8002 \
-  --enable-auto-tool-choice \
-  --tool-call-parser hermes
-
-# Start AgentFlux proxy (requires config files)
-python -c "
-from agentflux import start_proxy
-from agentflux.proxy import ProxyConfig
-
-config = ProxyConfig(
-    port=8030,
-    tool_list='config/filesys/tool_list.json',
-    classifier_name_or_path='config/filesys/classifier.json',
-    tool_adaptor_name_or_path='config/filesys/tool_adapters.json'
-)
-start_proxy(config)
-"
+# Start AgentFlux proxy
+bash scripts/proxy.sh &
 ```
 
-Now send requests to `http://localhost:8030/v1/chat/completions` using OpenAI SDK format!
+Now send requests to `http://localhost:9015/v1/chat/completions` using OpenAI SDK format!
 
 **Example Request**:
 ```python
@@ -354,7 +336,8 @@ Benchmark your finetuned models against baseline:
 export WORKSPACE=/path/to/test/workspace
 
 # Run complete evaluation pipeline
-bash bash/evaluate.sh filesys
+cd ../orchestration_framework/evaluation
+bash scripts/evaluate.sh filesys
 ```
 
 This executes:
@@ -396,7 +379,7 @@ python orchestration-framework/evaluation/score.py \
 
 ### Configuration Files
 
-Each tool category requires configuration in `config/{category}/`:
+Each tool category requires configuration in `inference/agentflux/config/{category}/`:
 
 - **`tool_list.json`**: MCP tool definitions (OpenAI format)
 - **`classifier.json`**: Classifier model endpoint and configuration
@@ -421,16 +404,22 @@ Each tool category requires configuration in `config/{category}/`:
 ### Adding a New Tool Category
 
 1. **Create Configuration**:
+   
    ```bash
-   mkdir -p config/my_category
-   # Add tool_list.json, templates, etc.
+   cd inference
+   mkdir -p agentflux/config/my_category
+   # Add tool_list.json, classifier.json, tool_adapters.json
    ```
-
+   
 2. **Generate Training Data**:
+   
    ```bash
-   bash bash/finetune.sh my_category
+   cd ../finetune
+   mkdir -p my_category
+   # Add query_generation_template.txt
+   bash scripts/finetune.sh my_category
    ```
-
+   
 3. **Create Judge Script**:
    ```python
    # orchestration-framework/evaluation/my_category/judge.py
@@ -439,7 +428,8 @@ Each tool category requires configuration in `config/{category}/`:
 
 4. **Run Evaluation**:
    ```bash
-   bash bash/evaluate.sh my_category
+   cd ../orchestration_framework/evaluation
+   bash scripts/evaluate.sh my_category
    ```
 
 ### Advanced Configuration
