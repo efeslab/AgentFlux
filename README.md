@@ -335,7 +335,7 @@ client = openai.OpenAI(
 )
 
 response = client.chat.completions.create(
-    model="dualtune",  # Model name doesn't matter, proxy handles routing
+    model="agentflux",  # Model name doesn't matter, proxy handles routing
     messages=[
         {"role": "user", "content": "Read the contents of README.md"}
     ],
@@ -550,22 +550,22 @@ This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENS
 
 ## 📞 Contact & Support
 
-- **Issues**: [GitHub Issues](https://github.com/yourusername/DualTune/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/yourusername/DualTune/discussions)
+- **Issues**: [GitHub Issues](https://github.com/yourusername/AgentFlux/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/yourusername/AgentFlux/discussions)
 - **Email**: your.email@example.com
 
 ---
 
 ## 🌟 Citation
 
-If you use DualTune in your research, please cite:
+If you use AgentFlux in your research, please cite:
 
 ```bibtex
-@software{dualtune2024,
-  title={DualTune: Dual-Optimization Framework for LLM Tool-Calling Systems},
-  author={Your Name},
-  year={2024},
-  url={https://github.com/yourusername/DualTune}
+@article{kadekodi2025dualtune,
+  title={DualTune: Decoupled Fine-Tuning for On-Device Agentic Systems},
+  author={Kadekodi, Rohan and Jin, Zhan and Kamahori, Keisuke and Gu, Yile and Khatiri, Sean and Bayindirli, Noah H and Gorbunov, Sergey and Kasikci, Baris},
+  journal={arXiv preprint arXiv:2510.00229},
+  year={2025}
 }
 ```
 
@@ -573,8 +573,8 @@ If you use DualTune in your research, please cite:
 
 <div align="center">
 
-**⭐ Star us on GitHub if DualTune helps your project! ⭐**
+**⭐ Star us on GitHub if AgentFlux helps your project! ⭐**
 
-[⬆ Back to Top](#dualtune-dual-optimization-framework-for-llm-tool-calling-systems)
+[⬆ Back to Top](#agentflux-dual-optimization-framework-for-llm-tool-calling-systems)
 
 </div>
