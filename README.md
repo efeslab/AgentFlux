@@ -550,9 +550,9 @@ This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENS
 
 ## 📞 Contact & Support
 
-- **Issues**: [GitHub Issues](https://github.com/yourusername/AgentFlux/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/yourusername/AgentFlux/discussions)
-- **Email**: your.email@example.com
+- **Issues**: [GitHub Issues](https://github.com/efeslab/AgentFlux/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/efeslab/AgentFlux/discussions)
+- **Email**: rohankad@cs.washington.edu
 
 ---
 
@@ -574,7 +574,5 @@ If you use AgentFlux in your research, please cite:
 <div align="center">
 
 **⭐ Star us on GitHub if AgentFlux helps your project! ⭐**
-
-[⬆ Back to Top](#agentflux-dual-optimization-framework-for-llm-tool-calling-systems)
 
 </div>
