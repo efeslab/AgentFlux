@@ -1,0 +1,570 @@
+[
+  {
+    "function": {
+      "description": "Execute any Monday.com API operation by generating GraphQL queries and mutations dynamically. Make sure you ask only for the fields you need and nothing more. When providing the query/mutation - use get_graphql_schema and get_type_details tools first to understand the schema before crafting your query.",
+      "name": "all_monday_api",
+      "parameters": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "additionalProperties": false,
+        "properties": {
+          "query": {
+            "description": "Custom GraphQL query/mutation. you need to provide the full query / mutation",
+            "type": "string"
+          },
+          "variables": {
+            "description": "JSON string containing the variables for the GraphQL operation",
+            "type": "string"
+          }
+        },
+        "required": [
+          "query",
+          "variables"
+        ],
+        "type": "object"
+      }
+    },
+    "type": "function"
+  },
+  {
+    "function": {
+      "description": "Get items by board id and term",
+      "name": "get_board_items_by_name",
+      "parameters": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "additionalProperties": false,
+        "properties": {
+          "boardId": {
+            "type": "number"
+          },
+          "term": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "boardId",
+          "term"
+        ],
+        "type": "object"
+      }
+    },
+    "type": "function"
+  },
+  {
+    "function": {
+      "description": "Create a new item in a monday.com board",
+      "name": "create_item",
+      "parameters": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "additionalProperties": false,
+        "properties": {
+          "boardId": {
+            "description": "The id of the board to which the new item will be added",
+            "type": "number"
+          },
+          "columnValues": {
+            "description": "A string containing the new column values for the item following this structure: {\\\"column_id\\\": \\\"value\\\",... you can change multiple columns at once, note that for status column you must use nested value with 'label' as a key and for date column use 'date' as key} - example: \"{\\\"text_column_id\\\":\\\"New text\\\", \\\"status_column_id\\\":{\\\"label\\\":\\\"Done\\\"}, \\\"date_column_id\\\":{\\\"date\\\":\\\"2023-05-25\\\"},\\\"dropdown_id\\\":\\\"value\\\", \\\"phone_id\\\":\\\"123-456-7890\\\", \\\"email_id\\\":\\\"test@example.com\\\"}\"",
+            "type": "string"
+          },
+          "groupId": {
+            "description": "The id of the group id to which the new item will be added, if its not clearly specified, leave empty",
+            "type": "string"
+          },
+          "name": {
+            "description": "The name of the new item to be created, must be relevant to the user's request",
+            "type": "string"
+          }
+        },
+        "required": [
+          "boardId",
+          "name",
+          "columnValues"
+        ],
+        "type": "object"
+      }
+    },
+    "type": "function"
+  },
+  {
+    "function": {
+      "description": "Create a new update in a monday.com board",
+      "name": "create_update",
+      "parameters": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "additionalProperties": false,
+        "properties": {
+          "body": {
+            "description": "The update to be created, must be relevant to the user's request",
+            "type": "string"
+          },
+          "itemId": {
+            "description": "The id of the item to which the update will be added",
+            "type": "number"
+          }
+        },
+        "required": [
+          "itemId",
+          "body"
+        ],
+        "type": "object"
+      }
+    },
+    "type": "function"
+  },
+  {
+    "function": {
+      "description": "Get comprehensive board information including metadata, structure, owners, and configuration",
+      "name": "get_board_info",
+      "parameters": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "additionalProperties": false,
+        "properties": {
+          "boardId": {
+            "description": "The id of the board to get information for",
+            "type": "number"
+          }
+        },
+        "required": [
+          "boardId"
+        ],
+        "type": "object"
+      }
+    },
+    "type": "function"
+  },
+  {
+    "function": {
+      "description": "Get users, can be filtered by name or partial name",
+      "name": "get_users_by_name",
+      "parameters": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "description": "The name or partial name of the user to get",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "type": "function"
+  },
+  {
+    "function": {
+      "description": "Create a monday.com board",
+      "name": "create_board",
+      "parameters": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "additionalProperties": false,
+        "properties": {
+          "boardDescription": {
+            "description": "The description of the board to create",
+            "type": "string"
+          },
+          "boardKind": {
+            "default": "public",
+            "description": "The kind of board to create",
+            "enum": [
+              "private",
+              "public",
+              "share"
+            ],
+            "type": "string"
+          },
+          "boardName": {
+            "description": "The name of the board to create",
+            "type": "string"
+          },
+          "workspaceId": {
+            "description": "The ID of the workspace to create the board in",
+            "type": "string"
+          }
+        },
+        "required": [
+          "boardName"
+        ],
+        "type": "object"
+      }
+    },
+    "type": "function"
+  },
+  {
+    "function": {
+      "description": "Create a new column in a monday.com board",
+      "name": "create_column",
+      "parameters": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "additionalProperties": false,
+        "properties": {
+          "boardId": {
+            "description": "The id of the board to which the new column will be added",
+            "type": "number"
+          },
+          "columnDescription": {
+            "description": "The description of the column to be created",
+            "type": "string"
+          },
+          "columnSettings": {
+            "description": "Column-specific configuration settings as a JSON string. Use the get_column_type_info tool to fetch the JSON schema for the given column type.",
+            "type": "string"
+          },
+          "columnTitle": {
+            "description": "The title of the column to be created",
+            "type": "string"
+          },
+          "columnType": {
+            "description": "The type of the column to be created",
+            "enum": [
+              "auto_number",
+              "board_relation",
+              "button",
+              "checkbox",
+              "color_picker",
+              "country",
+              "creation_log",
+              "date",
+              "dependency",
+              "direct_doc",
+              "doc",
+              "dropdown",
+              "email",
+              "file",
+              "formula",
+              "group",
+              "hour",
+              "integration",
+              "item_assignees",
+              "item_id",
+              "last_updated",
+              "link",
+              "location",
+              "long_text",
+              "mirror",
+              "name",
+              "numbers",
+              "people",
+              "person",
+              "phone",
+              "progress",
+              "rating",
+              "status",
+              "subtasks",
+              "tags",
+              "team",
+              "text",
+              "time_tracking",
+              "timeline",
+              "unsupported",
+              "vote",
+              "week",
+              "world_clock"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "boardId",
+          "columnType",
+          "columnTitle"
+        ],
+        "type": "object"
+      }
+    },
+    "type": "function"
+  },
+  {
+    "function": {
+      "description": "Fetch the Monday.com GraphQL schema structure including query and mutation definitions. This tool returns available query fields, mutation fields, and a list of GraphQL types in the schema. You can filter results by operation type (read/write) to focus on either queries or mutations.",
+      "name": "get_graphql_schema",
+      "parameters": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "additionalProperties": false,
+        "properties": {
+          "operationType": {
+            "description": "Type of operation: \"read\" for queries, \"write\" for mutations",
+            "enum": [
+              "read",
+              "write"
+            ],
+            "type": "string"
+          },
+          "random_string": {
+            "description": "Dummy parameter for no-parameter tools",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "type": "function"
+  },
+  {
+    "function": {
+      "description": "Retrieves comprehensive information about a specific column type, including JSON schema definition and other metadata. Use this before creating columns with the create_column tool to understand the structure, validation rules, and available properties for column settings.",
+      "name": "get_column_type_info",
+      "parameters": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "additionalProperties": false,
+        "properties": {
+          "columnType": {
+            "description": "The column type to retrieve information for (e.g., \"text\", \"status\", \"date\", \"numbers\")",
+            "enum": [
+              "auto_number",
+              "board_relation",
+              "button",
+              "checkbox",
+              "color_picker",
+              "country",
+              "creation_log",
+              "date",
+              "dependency",
+              "direct_doc",
+              "doc",
+              "dropdown",
+              "email",
+              "file",
+              "formula",
+              "group",
+              "hour",
+              "integration",
+              "item_assignees",
+              "item_id",
+              "last_updated",
+              "link",
+              "location",
+              "long_text",
+              "mirror",
+              "name",
+              "numbers",
+              "people",
+              "person",
+              "phone",
+              "progress",
+              "rating",
+              "status",
+              "subtasks",
+              "tags",
+              "team",
+              "text",
+              "time_tracking",
+              "timeline",
+              "unsupported",
+              "vote",
+              "week",
+              "world_clock"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "columnType"
+        ],
+        "type": "object"
+      }
+    },
+    "type": "function"
+  },
+  {
+    "function": {
+      "description": "Get detailed information about a specific GraphQL type from the Monday.com API schema",
+      "name": "get_type_details",
+      "parameters": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "additionalProperties": false,
+        "properties": {
+          "typeName": {
+            "description": "The name of the GraphQL type to get details for",
+            "type": "string"
+          }
+        },
+        "required": [
+          "typeName"
+        ],
+        "type": "object"
+      }
+    },
+    "type": "function"
+  },
+  {
+    "function": {
+      "description": "Get a collection of monday.com documents with their content as markdown. \n\nPAGINATION: \n- Default limit is 25 documents per page\n- Use 'page' parameter to get additional pages (starts at 1)\n- Check response for 'has_more_pages' to know if you should continue paginating\n- If user asks for \"all documents\" and you get exactly 25 results, continue with page 2, 3, etc.\n\nFILTERING: Provide an ID filter object with:\n- type: 'ids' for specific document IDs\n- type: 'object_ids' for specific document object IDs  \n- type: 'workspace_ids' for all docs in specific workspaces\n- values: array of ID strings (at least 1 required)\n\nExamples:\n- { type: 'ids', values: ['123', '456'] }\n- { type: 'object_ids', values: ['123'] }\n- { type: 'workspace_ids', values: ['ws_101'] }\n\nUSAGE PATTERNS:\n- For specific documents: use type 'ids' or 'object_ids' (A monday doc has two unique identifiers)\n- For workspace exploration: use type 'workspace_ids' with pagination\n- For large searches: start with page 1, then paginate if has_more_pages=true",
+      "name": "read_docs",
+      "parameters": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "additionalProperties": false,
+        "properties": {
+          "ids": {
+            "additionalProperties": false,
+            "description": "ID query object that specifies a type (ids/object_ids/workspace_ids) and an array of values.",
+            "properties": {
+              "type": {
+                "description": "Type of id to query by: ids, object_ids, or workspace_ids",
+                "enum": [
+                  "ids",
+                  "object_ids",
+                  "workspace_ids"
+                ],
+                "type": "string"
+              },
+              "values": {
+                "description": "Array of ID values for this query type (at least 1 required)",
+                "items": {
+                  "type": "string"
+                },
+                "minItems": 1,
+                "type": "array"
+              }
+            },
+            "required": [
+              "type",
+              "values"
+            ],
+            "type": "object"
+          },
+          "limit": {
+            "description": "Number of docs per page (default: 25). Affects pagination - if you get exactly this many results, there may be more pages.",
+            "type": "number"
+          },
+          "order_by": {
+            "description": "The order in which to retrieve your docs. The default shows created_at with the newest docs listed first. This argument will not be applied if you query docs by specific ids.",
+            "enum": [
+              "created_at",
+              "used_at"
+            ],
+            "type": "string"
+          },
+          "page": {
+            "description": "The page number to return (starts at 1). Use this to paginate through large result sets. Check response for has_more_pages indicator.",
+            "type": "number"
+          }
+        },
+        "required": [
+          "ids"
+        ],
+        "type": "object"
+      }
+    },
+    "type": "function"
+  },
+  {
+    "function": {
+      "description": "This tool returns the boards, docs and folders in a workspace and which folder they are in. It returns up to 100 of each object type, if you receive 100 assume there are additional objects of that type in the workspace.",
+      "name": "workspace_info",
+      "parameters": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "additionalProperties": false,
+        "properties": {
+          "workspace_id": {
+            "description": "The ID of the workspace to get information for",
+            "type": "number"
+          }
+        },
+        "required": [
+          "workspace_id"
+        ],
+        "type": "object"
+      }
+    },
+    "type": "function"
+  },
+  {
+    "function": {
+      "description": "List all workspaces available to the user. Returns up to 500 workspaces with their ID, name, and description.",
+      "name": "list_workspaces",
+      "parameters": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "additionalProperties": false,
+        "properties": {},
+        "type": "object"
+      }
+    },
+    "type": "function"
+  },
+  {
+    "function": {
+      "description": "Create a new monday.com doc either inside a workspace or attached to an item (via a doc column). After creation, the provided markdown will be appended to the document.\n\nLOCATION TYPES:\n- workspace: Creates a document in a workspace (requires workspace_id, optional doc_kind, optional folder_id)\n- item: Creates a document attached to an item (requires item_id, optional column_id)\n\nUSAGE EXAMPLES:\n- Workspace doc: { location: { type: \"workspace\", workspace_id: 123, doc_kind: \"private\" }, markdown: \"...\" }\n- Workspace doc in folder: { location: { type: \"workspace\", workspace_id: 123, folder_id: 17264196 }, markdown: \"...\" }\n- Item doc: { location: { type: \"item\", item_id: 456, column_id: \"doc_col_1\" }, markdown: \"...\" }",
+      "name": "create_doc",
+      "parameters": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "additionalProperties": false,
+        "properties": {
+          "doc_name": {
+            "description": "Name for the new document.",
+            "type": "string"
+          },
+          "location": {
+            "anyOf": [
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "doc_kind": {
+                    "description": "Document kind (public/private/share). Defaults to public.",
+                    "enum": [
+                      "private",
+                      "public",
+                      "share"
+                    ],
+                    "type": "string"
+                  },
+                  "folder_id": {
+                    "description": "Optional folder ID to place the document inside a specific folder",
+                    "type": "number"
+                  },
+                  "type": {
+                    "const": "workspace",
+                    "description": "Create document in workspace",
+                    "type": "string"
+                  },
+                  "workspace_id": {
+                    "description": "Workspace ID under which to create the new document",
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "type",
+                  "workspace_id"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "column_id": {
+                    "description": "ID of an existing 'doc' column on the board which contains the item. If not provided, the tool will create a new doc column automatically when creating a doc on an item.",
+                    "type": "string"
+                  },
+                  "item_id": {
+                    "description": "Item ID to attach the new document to",
+                    "type": "number"
+                  },
+                  "type": {
+                    "const": "item",
+                    "description": "Create document attached to item",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "type",
+                  "item_id"
+                ],
+                "type": "object"
+              }
+            ],
+            "description": "Location where the document should be created - either in a workspace or attached to an item"
+          },
+          "markdown": {
+            "description": "Markdown content that will be imported into the newly created document as blocks.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "location",
+          "doc_name",
+          "markdown"
+        ],
+        "type": "object"
+      }
+    },
+    "type": "function"
+  }
+]

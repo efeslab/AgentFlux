@@ -1,0 +1,676 @@
+{
+  "tool_capabilities": {
+    "all_monday_api": {
+      "extracted_capabilities": {
+        "primary_actions": ["execute", "query", "mutate"],
+        "targets": ["any Monday.com data", "GraphQL operations", "custom workflows"],
+        "features": [
+          "full API access",
+          "custom GraphQL queries",
+          "advanced operations",
+          "variable support"
+        ],
+        "constraints": ["requires GraphQL knowledge", "must understand schema"],
+        "parameters": {
+          "required": ["query", "variables"],
+          "optional": [],
+          "parameter_purposes": {
+            "query": "GraphQL query or mutation",
+            "variables": "operation parameters"
+          }
+        }
+      },
+      "derived_capabilities": {
+        "can_do": [
+          "perform any Monday.com operation",
+          "execute complex queries",
+          "batch operations",
+          "advanced data manipulation",
+          "get activity or updates"
+        ],
+        "cannot_do": [
+          "operate without schema knowledge",
+          "provide query validation",
+          "generate queries automatically",
+          "handle malformed GraphQL"
+        ],
+        "best_for": [
+          "complex operations",
+          "batch processing",
+          "advanced integrations",
+          "custom workflows",
+          "detailed activity retrieval"
+        ]
+      }
+    },
+    "get_board_items_by_name": {
+      "extracted_capabilities": {
+        "primary_actions": ["search", "find", "filter"],
+        "targets": ["board items", "tasks", "records"],
+        "features": [
+          "search by name/term",
+          "board-specific filtering",
+          "partial name matching",
+          "returns matching items"
+        ],
+        "constraints": ["requires board ID", "single board only", "name-based search only"],
+        "parameters": {
+          "required": ["boardId", "term"],
+          "optional": [],
+          "parameter_purposes": {
+            "boardId": "target board identifier",
+            "term": "search string for item names"
+          }
+        }
+      },
+      "derived_capabilities": {
+        "can_do": [
+          "find items by partial name",
+          "search within specific board",
+          "locate tasks by keywords",
+          "filter board contents"
+        ],
+        "cannot_do": [
+          "search across multiple boards",
+          "search by other attributes",
+          "search by column values",
+          "create or modify items"
+        ],
+        "best_for": [
+          "finding specific tasks",
+          "locating items by name",
+          "board content discovery",
+          "task lookup workflows"
+        ]
+      }
+    },
+    "create_item": {
+      "extracted_capabilities": {
+        "primary_actions": ["create", "add", "insert"],
+        "targets": ["board items", "tasks", "records"],
+        "features": [
+          "creates new board items",
+          "sets column values during creation",
+          "supports multiple column types",
+          "can specify target group",
+          "handles complex column structures"
+        ],
+        "constraints": ["requires board ID", "must provide item name", "column values as JSON string"],
+        "parameters": {
+          "required": ["boardId", "name", "columnValues"],
+          "optional": ["groupId"],
+          "parameter_purposes": {
+            "boardId": "target board identifier",
+            "name": "new item title",
+            "columnValues": "initial column data",
+            "groupId": "target group within board"
+          }
+        }
+      },
+      "derived_capabilities": {
+        "can_do": [
+          "create tasks with initial data",
+          "set status, dates, assignments on creation",
+          "add items to specific groups",
+          "populate multiple columns at once",
+          "handle various column types (status, date, dropdown, etc.)"
+        ],
+        "cannot_do": [
+          "create multiple items at once",
+          "create items without names",
+          "modify existing items",
+          "create boards or columns"
+        ],
+        "best_for": [
+          "task creation workflows",
+          "adding structured data",
+          "populating boards with new items",
+          "automated item generation"
+        ]
+      }
+    },
+    "create_update": {
+      "extracted_capabilities": {
+        "primary_actions": ["comment", "update", "add"],
+        "targets": ["item updates", "comments", "activity log"],
+        "features": [
+          "adds text updates to items",
+          "creates activity entries",
+          "supports rich text content"
+        ],
+        "constraints": ["requires item ID", "text-based updates only"],
+        "parameters": {
+          "required": ["itemId", "body"],
+          "optional": [],
+          "parameter_purposes": {
+            "itemId": "target item identifier",
+            "body": "update content text"
+          }
+        }
+      },
+      "derived_capabilities": {
+        "can_do": [
+          "add comments to items",
+          "create progress updates",
+          "log activity on tasks",
+          "provide status updates"
+        ],
+        "cannot_do": [
+          "modify item properties",
+          "update multiple items",
+          "delete or edit existing updates",
+          "add file attachments"
+        ],
+        "best_for": [
+          "progress reporting",
+          "task commenting",
+          "activity logging",
+          "communication workflows"
+        ]
+      }
+    },
+    "get_board_info": {
+      "DONT USE THIS TOOL": true,
+      "extracted_capabilities": {
+        "targets": ["board metadata", "board structure", "board configuration"],
+        "features": [
+          "board metadata",
+          "structure information",
+          "owner details",
+          "configuration data"
+        ],
+        "constraints": ["single board only", "read-only information"],
+        "parameters": {
+          "required": ["boardId"],
+          "optional": [],
+          "parameter_purposes": {
+            "boardId": "target board identifier"
+          }
+        }
+      },
+      "derived_capabilities": {
+        "can_do": [
+          "understand board structure",
+          "identify column names",
+          "check board permissions",
+          "analyze board configuration"
+        ],
+        "cannot_do": [
+          "modify board settings",
+          "compare multiple boards",
+          "access item data",
+          "change board structure",
+          "get column values",
+          "get column types"
+        ],
+        "best_for": [
+          "board analysis",
+          "structure discovery",
+          "configuration review",
+          "setup validation",
+          "board column names"
+        ]
+      }
+    },
+    "get_users_by_name": {
+      "extracted_capabilities": {
+        "primary_actions": ["search", "find", "lookup"],
+        "targets": ["users", "team members", "people"],
+        "features": [
+          "name-based user search",
+          "partial name matching",
+          "user directory access"
+        ],
+        "constraints": ["name-based search only", "limited user information"],
+        "parameters": {
+          "required": [],
+          "optional": ["name"],
+          "parameter_purposes": {
+            "name": "user name or partial name"
+          }
+        }
+      },
+      "derived_capabilities": {
+        "can_do": [
+          "find team members",
+          "lookup user details",
+          "search user directory",
+          "identify assignable users"
+        ],
+        "cannot_do": [
+          "modify user information",
+          "search by other attributes",
+          "manage user permissions",
+          "create users"
+        ],
+        "best_for": [
+          "user lookup workflows",
+          "assignment preparation",
+          "team member identification",
+          "directory searches"
+        ]
+      }
+    },
+    "create_board": {
+      "extracted_capabilities": {
+        "primary_actions": ["create", "establish", "initialize"],
+        "targets": ["boards", "projects", "workspaces"],
+        "features": [
+          "board creation",
+          "description setting",
+          "privacy level control",
+          "workspace assignment"
+        ],
+        "constraints": ["requires board name", "limited initial configuration"],
+        "parameters": {
+          "required": ["boardName"],
+          "optional": ["boardDescription", "boardKind", "workspaceId"],
+          "parameter_purposes": {
+            "boardName": "new board title",
+            "boardDescription": "board description",
+            "boardKind": "privacy level",
+            "workspaceId": "target workspace"
+          }
+        }
+      },
+      "derived_capabilities": {
+        "can_do": [
+          "create new project boards",
+          "set initial board configuration",
+          "organize boards in workspaces",
+          "establish privacy settings"
+        ],
+        "cannot_do": [
+          "create multiple boards at once",
+          "pre-populate with items",
+          "copy existing board structures",
+          "set advanced configurations"
+        ],
+        "best_for": [
+          "project initialization",
+          "board setup workflows",
+          "workspace organization",
+          "new project creation"
+        ]
+      }
+    },
+    "create_column": {
+      "extracted_capabilities": {
+        "primary_actions": ["add", "configure", "customize"],
+        "targets": ["board columns", "data fields", "board structure"],
+        "features": [
+          "multiple column types support",
+          "column configuration",
+          "custom settings",
+          "board structure modification"
+        ],
+        "constraints": ["requires board ID", "single column creation", "type-specific settings"],
+        "parameters": {
+          "required": ["boardId", "columnType", "columnTitle"],
+          "optional": ["columnDescription", "columnSettings"],
+          "parameter_purposes": {
+            "boardId": "target board identifier",
+            "columnType": "data type for column",
+            "columnTitle": "column display name",
+            "columnDescription": "column description",
+            "columnSettings": "type-specific configuration"
+          }
+        }
+      },
+      "derived_capabilities": {
+        "can_do": [
+          "customize board structure",
+          "add data fields",
+          "configure column behavior",
+          "extend board capabilities"
+        ],
+        "cannot_do": [
+          "create multiple columns at once",
+          "modify existing columns",
+          "delete columns",
+          "reorder columns"
+        ],
+        "best_for": [
+          "board customization",
+          "data structure setup",
+          "workflow enhancement",
+          "field addition"
+        ]
+      }
+    },
+    "get_graphql_schema": {
+      "extracted_capabilities": {
+        "primary_actions": ["discover", "explore", "analyze"],
+        "targets": ["API schema", "available operations", "GraphQL structure"],
+        "features": [
+          "schema exploration",
+          "operation type filtering",
+          "API discovery",
+          "structure understanding"
+        ],
+        "constraints": ["read-only schema access", "operation type filtering only"],
+        "parameters": {
+          "required": [],
+          "optional": ["operationType", "random_string"],
+          "parameter_purposes": {
+            "operationType": "filter by read/write operations",
+            "random_string": "dummy parameter"
+          }
+        }
+      },
+      "derived_capabilities": {
+        "can_do": [
+          "understand API capabilities",
+          "discover available operations",
+          "plan complex queries",
+          "validate operation feasibility"
+        ],
+        "cannot_do": [
+          "modify schema",
+          "execute operations",
+          "provide detailed examples",
+          "validate specific queries"
+        ],
+        "best_for": [
+          "API exploration",
+          "query planning",
+          "capability discovery",
+          "integration preparation"
+        ]
+      }
+    },
+    "get_column_type_info": {
+      "extracted_capabilities": {
+        "primary_actions": ["describe", "specify", "configure"],
+        "targets": ["column types", "data schemas", "configuration options"],
+        "features": [
+          "column type details",
+          "JSON schema definitions",
+          "configuration guidance",
+          "validation rules"
+        ],
+        "constraints": ["single column type only", "read-only information"],
+        "parameters": {
+          "required": ["columnType"],
+          "optional": [],
+          "parameter_purposes": {
+            "columnType": "specific column type to analyze"
+          }
+        }
+      },
+      "derived_capabilities": {
+        "can_do": [
+          "understand column requirements",
+          "validate column configurations",
+          "prepare column settings",
+          "guide column creation"
+        ],
+        "cannot_do": [
+          "compare multiple types",
+          "create columns directly",
+          "modify type definitions",
+          "provide usage examples"
+        ],
+        "best_for": [
+          "column creation preparation",
+          "configuration validation",
+          "type understanding",
+          "schema compliance"
+        ]
+      }
+    },
+    "get_type_details": {
+      "extracted_capabilities": {
+        "primary_actions": ["examine", "detail", "specify"],
+        "targets": ["GraphQL types", "data structures", "API objects"],
+        "features": [
+          "type definition details",
+          "field information",
+          "relationship mapping",
+          "structure understanding"
+        ],
+        "constraints": ["single type only", "GraphQL schema dependent"],
+        "parameters": {
+          "required": ["typeName"],
+          "optional": [],
+          "parameter_purposes": {
+            "typeName": "specific GraphQL type name"
+          }
+        }
+      },
+      "derived_capabilities": {
+        "can_do": [
+          "understand data structures",
+          "plan query structures",
+          "validate field access",
+          "map relationships"
+        ],
+        "cannot_do": [
+          "compare multiple types",
+          "execute queries",
+          "modify type definitions",
+          "provide usage patterns"
+        ],
+        "best_for": [
+          "query planning",
+          "data structure understanding",
+          "field validation",
+          "relationship analysis"
+        ]
+      }
+    },
+    "read_docs": {
+      "extracted_capabilities": {
+        "primary_actions": ["read", "retrieve", "paginate"],
+        "targets": ["Monday docs", "document content", "markdown content"],
+        "features": [
+          "document content retrieval",
+          "pagination support",
+          "multiple ID filtering",
+          "workspace-based queries",
+          "markdown format output"
+        ],
+        "constraints": ["25 documents per page", "specific ID types only", "read-only access"],
+        "parameters": {
+          "required": ["ids"],
+          "optional": ["limit", "order_by", "page"],
+          "parameter_purposes": {
+            "ids": "document identification object",
+            "limit": "results per page",
+            "order_by": "sort order",
+            "page": "pagination control"
+          }
+        }
+      },
+      "derived_capabilities": {
+        "can_do": [
+          "retrieve document content",
+          "paginate through large collections",
+          "filter by various ID types",
+          "access workspace documents",
+          "handle bulk document retrieval"
+        ],
+        "cannot_do": [
+          "modify document content",
+          "search by content",
+          "create documents",
+          "access unlimited documents at once"
+        ],
+        "best_for": [
+          "document content access",
+          "bulk document processing",
+          "workspace exploration",
+          "content analysis workflows"
+        ]
+      }
+    },
+    "workspace_info": {
+      "extracted_capabilities": {
+        "primary_actions": ["explore", "catalog", "organize"],
+        "targets": ["workspace contents", "boards", "docs", "folders"],
+        "features": [
+          "workspace content listing",
+          "organizational structure",
+          "multiple object types",
+          "folder relationships"
+        ],
+        "constraints": ["100 objects per type limit", "single workspace only"],
+        "parameters": {
+          "required": ["workspace_id"],
+          "optional": [],
+          "parameter_purposes": {
+            "workspace_id": "target workspace identifier"
+          }
+        }
+      },
+      "derived_capabilities": {
+        "can_do": [
+          "map workspace structure",
+          "inventory workspace contents",
+          "understand organization",
+          "prepare for workspace operations"
+        ],
+        "cannot_do": [
+          "access content details",
+          "modify workspace structure",
+          "handle unlimited objects",
+          "compare workspaces"
+        ],
+        "best_for": [
+          "workspace exploration",
+          "content inventory",
+          "organizational analysis",
+          "navigation preparation"
+        ]
+      }
+    },
+    "list_workspaces": {
+      "extracted_capabilities": {
+        "primary_actions": ["list", "enumerate", "discover"],
+        "targets": ["workspaces", "workspace directory", "accessible workspaces"],
+        "features": [
+          "workspace discovery",
+          "basic workspace information",
+          "access inventory"
+        ],
+        "constraints": ["500 workspace limit", "basic information only"],
+        "parameters": {
+          "required": [],
+          "optional": [],
+          "parameter_purposes": {}
+        }
+      },
+      "derived_capabilities": {
+        "can_do": [
+          "discover available workspaces",
+          "identify workspace options",
+          "prepare workspace selection",
+          "inventory accessible areas"
+        ],
+        "cannot_do": [
+          "access workspace contents",
+          "modify workspaces",
+          "provide detailed workspace info",
+          "handle unlimited workspaces"
+        ],
+        "best_for": [
+          "workspace discovery",
+          "access mapping",
+          "initial exploration",
+          "workspace selection"
+        ]
+      }
+    },
+    "create_doc": {
+      "extracted_capabilities": {
+        "primary_actions": ["create", "initialize", "populate"],
+        "targets": ["Monday docs", "documentation", "markdown content"],
+        "features": [
+          "document creation",
+          "markdown content import",
+          "multiple location types",
+          "folder organization",
+          "item attachment"
+        ],
+        "constraints": ["single document creation", "requires location specification"],
+        "parameters": {
+          "required": ["location", "doc_name", "markdown"],
+          "optional": [],
+          "parameter_purposes": {
+            "location": "where to create document",
+            "doc_name": "document title",
+            "markdown": "initial content"
+          }
+        }
+      },
+      "derived_capabilities": {
+        "can_do": [
+          "create workspace documents",
+          "attach documents to items",
+          "organize in folders",
+          "populate with markdown content",
+          "set privacy levels"
+        ],
+        "cannot_do": [
+          "create multiple documents",
+          "modify existing documents",
+          "convert other formats",
+          "batch document creation"
+        ],
+        "best_for": [
+          "documentation creation",
+          "content initialization",
+          "knowledge management",
+          "structured content creation"
+        ]
+      }
+    }
+  },
+  "_workflow_patterns": {
+    "discovery_workflows": [
+      ["get_graphql_schema", "get_type_details", "list_workspaces", "workspace_info", "get_board_info"],
+      ["get_graphql_schema", "get_type_details", "all_monday_api"]
+    ],
+    "content_creation_workflows": [
+      ["create_board", "create_column", "create_item"],
+      ["get_users_by_name", "create_item"],
+      ["create_doc", "create_item"]
+    ],
+    "data_access_workflows": [
+      ["get_graphql_schema", "get_type_details", "get_board_items_by_name", "create_update"],
+      ["read_docs", "create_doc"],
+      ["get_graphql_schema", "get_type_details", "get_board_activity"]
+    ],
+    "configuration_workflows": [
+      ["get_graphql_schema", "get_type_details", "get_column_type_info", "create_column"],
+      ["get_graphql_schema", "get_type_details", "get_board_info", "create_column"]
+    ]
+  },
+  "tool_selection_guidelines": {
+    "Operations related to schema or columns": {
+      "reading": [
+        "Use get_graphql_schema for getting a list of types",
+        "Use get_type_details for understanding specific column or data types",
+        "Use get_column_type_info for column configuration details",
+        "ALWAYS USE GET_GRAPHQL_SCHEMA TO UNDERSTAND THE SCHEMA FIRST",
+        "USE GET_TYPE_DETAILS ALONG WITH GET_GRAPHQL_SCHEMA"
+      ]
+    },
+    "Getting data according to schema": {
+      "reading": [
+        "Use all_monday_api for complex queries involving multiple types or relationships",
+        "Use get_board_info for understanding board structure before querying items",
+        "Use get_board_items_by_name for searching items by name within a specific board",
+        "Use get_users_by_name for finding users by name",
+        "Use get_board_activity for tracking changes over time",
+        "USE GET_GRAPHQL_SCHEMA and GET_TYPE_DETAILS TO UNDERSTAND THE SCHEMA FIRST"          
+      ]
+    },
+    "Operations related to activity of board items": {
+      "reading": [
+        "USE ALL_MONDAY_API TO GET BOARD ACTIVITY, ALWAYS WITH GET_GRAPHQL_SCHEMA AND GET_TYPE_DETAILS TO UNDERSTAND THE SCHEMA FIRST",
+        "USE GET_TYPE_DETAILS ALONG WITH GET_GRAPHQL_SCHEMA FOR FINDING THE RIGHT FIELDS"
+      ]
+    } 
+  }
+}
