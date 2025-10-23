@@ -1,0 +1,28 @@
+[package]
+name = "browserd-cli"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name = "browserd-cli"
+path = "src/main.rs"
+
+[dependencies]
+bollard.workspace = true
+browserd = { path = "../browserd" }
+browserd-eval = { path = "../browserd-eval" }
+clap = "4.5.39"
+config = "0.15.11"
+dotenv.workspace = true
+error-stack.workspace = true
+
+futures.workspace = true
+reqwest = { version = "0.12.15", features = ["json"] }
+serde = "1.0.219"
+serde_json = "1.0"
+serde_yaml = "0.9"
+thiserror.workspace = true
+tokio.workspace = true
+tokio-util.workspace = true
+tracing.workspace = true
+tracing-subscriber.workspace = true

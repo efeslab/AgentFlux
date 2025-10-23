@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package common;
+
+message AppFile {
+    string relative_path = 1;
+    bytes content = 2;
+}
+
+message AppFileList {
+    repeated AppFile files = 1;
+}

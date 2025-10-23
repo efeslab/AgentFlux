@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package app_registry;
+
+import "common.proto";
+
+message PullAppRequest {
+    string app_name = 1;
+}
+
+message PullAppResponse {
+    optional common.AppFileList app_files = 1;
+}
+
+message PushAppRequest {
+    string app_name = 1;
+    common.AppFileList app_files = 2;
+}
+
+message PushAppResponse { }
+
+service AppRegistry {
+    rpc Pull (PullAppRequest) returns (PullAppResponse) {}
+    rpc Push (PushAppRequest) returns (PushAppResponse) {}
+}

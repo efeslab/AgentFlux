@@ -1,0 +1,12 @@
+[build-system]
+requires = ["setuptools>=42"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "agentflux"
+version = "0.1.0"
+description = "A proxy service with classifier and tool adaptor"
+authors = [{ name = "Zhan Jin" }]
+
+[tool.setuptools]
+packages = ["agentflux"]

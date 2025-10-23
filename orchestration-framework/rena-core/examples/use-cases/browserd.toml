@@ -1,0 +1,59 @@
+container_comm_host = "127.0.0.1"
+container_comm_port = 50051
+runtime_path = "../rena-runtime"
+
+[inference_engine]
+type = "openai"
+model = "lfm"
+max_tokens = 2048
+url = "http://127.0.0.1:8080"
+
+[discovery]
+type = "static"
+
+[[discovery.apps]]
+name = "brave_search"
+agent_protocol = "mcp"
+runtime = "nodejs"
+command = "npx"
+args = ["-y", "@modelcontextprotocol/server-brave-search"]
+env = {"BRAVE_API_KEY" = "<your-brave-api-key>"}
+
+[[discovery.apps]]
+name = "playwright"
+agent_protocol = "mcp"
+runtime = "nodejs"
+command = "npx"
+args = ["@playwright/mcp@latest", "--headless", "--browser", "firefox"]
+
+[[discovery.apps]]
+name = "filesystem"
+agent_protocol = "mcp"
+runtime = "nodejs"
+command = "npx"
+args = ["-y", "@modelcontextprotocol/server-filesystem", "/workspace"]
+mounts = [ { type = "bind", source = "/Users/<your-whoami-here>/Downloads", target = "/workspace" } ]
+
+[[discovery.apps]]
+name = "cli"
+agent_protocol = "mcp"
+runtime = "python"
+command = "uvx"
+args = ["cli-mcp-server"]
+env = { "ALLOWED_DIR" = "/workspace", "ALLOWED_COMMANDS" = "all", "ALLOWED_FLAGS" = "all", "MAX_COMMAND_LENGTH" = "1024", "COMMAND_TIMEOUT" = "60", "ALLOW_SHELL_OPERATORS" = "true" }
+mounts = [ { type = "bind", source = "/Users/<your-whoami-here>/Downloads", target = "/workspace" } ]
+
+[[discovery.apps]]
+name = "notion"
+agent_protocol = "mcp"
+runtime = "nodejs"
+command = "npx"
+args = ["-y", "@notionhq/notion-mcp-server"]
+env = { "OPENAPI_MCP_HEADERS" = "{\"Authorization\": \"Bearer <your-notion-api-key>\", \"Notion-Version\": \"2022-06-28\" }" }
+
+[[discovery.apps]]
+name = "monday"
+agent_protocol = "mcp"
+runtime = "nodejs"
+command = "npx"
+args = ["mcp-remote", "https://mcp.monday.com/sse", "--header", "Authorization: Bearer <your-monday-api-key>"]

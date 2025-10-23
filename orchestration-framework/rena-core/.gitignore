@@ -1,0 +1,20 @@
+# rena-runtime
+/rena-runtime/rena_runtime/apps/
+*.egg-info/
+*_pb2.py
+*_pb2.pyi
+*_pb2_grpc.py
+__pychace__/
+*.pyc
+/venv
+
+# rena-browserd
+/rena-browserd/target
+
+# macOS
+.DS_STORE
+
+.env
+config.toml
+
+.build

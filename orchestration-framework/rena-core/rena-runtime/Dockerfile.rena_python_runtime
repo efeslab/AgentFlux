@@ -1,0 +1,15 @@
+FROM python:3.11-slim-bookworm
+
+WORKDIR /app
+
+RUN pip install uv
+
+COPY ./rena-runtime/pyproject.toml /app/rena-runtime/
+
+WORKDIR /app/rena-runtime
+RUN pip install --upgrade build
+RUN pip install -e .
+
+COPY ./rena-runtime /app/rena-runtime
+
+ENV PYTHONPATH=.

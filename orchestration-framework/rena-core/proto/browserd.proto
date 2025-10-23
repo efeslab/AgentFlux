@@ -1,0 +1,128 @@
+syntax = "proto3";
+
+package browserd;
+
+import "common.proto";
+
+enum AgentProtocol {
+    MCP = 0;
+}
+
+message AppConfig {
+    string name = 1;
+    AgentProtocol agent_protocol = 2;
+    string command = 3;
+    repeated string args = 4;
+    map<string, string> env = 5;
+    repeated string scripts = 6;
+}
+
+message AppBundle {
+    AppConfig config = 1;
+    common.AppFileList files = 2;
+}
+
+message TraceList {
+    repeated Trace traces = 1;
+}
+
+message Trace {
+    string label = 1;
+    optional uint64 latency = 2;
+    optional string metadata = 3;
+    optional TraceList inner_traces = 4;
+}
+
+message RunAppRequest {
+    AppBundle app_bundle = 1;
+}
+
+message RunAppResponse {
+    bool success = 1;
+    optional string error = 2;
+}
+
+// NOTE(sean): assuming input_schema is str of a valid json object
+message Tool {
+    string input_schema = 1;
+    string name = 2;
+    string description = 3;
+}
+
+message ListToolsRequest { }
+
+message ListToolsResponse {
+    repeated Tool tools =1;
+    optional string error = 2;
+}
+
+// NOTE(sean): assuming tool_input is str of a valid json object
+message CallToolRequest {
+    string id = 1;
+    string tool_name = 2;
+    string tool_input = 3;
+
+}
+
+message CallToolResponse {
+    string id = 1;
+    repeated string tool_results = 2;
+    optional string error = 3;
+}
+
+
+message AppRequest {
+    bytes container_id = 1;
+    oneof request {
+        RunAppRequest run_app_req = 2;
+        ListToolsRequest list_tools_req = 3;
+        CallToolRequest call_tool_req = 4;
+    }
+}
+
+message AppResponse {
+    oneof response {
+        RunAppResponse run_app_res = 1;
+        ListToolsResponse list_tools_res = 2;
+        CallToolResponse call_tool_res = 3;
+    }
+}
+
+message GetContainerIdRequest {}
+
+message ContainerRequest {
+    oneof request {
+        GetContainerIdRequest get_container_id_req = 1;
+    }
+}
+
+message GetContainerIdResponse {
+    bytes container_id = 1;
+}
+
+message ContainerResponse {
+    oneof response {
+        GetContainerIdResponse get_container_id_res = 1;
+    }
+}
+
+message Event {
+    message Payload {
+        oneof msg {
+            // from browserd to container
+            ContainerRequest container_req = 3;
+            AppRequest app_req = 4;
+
+            // from container to browserd
+            ContainerResponse container_res = 5;
+            AppResponse app_res = 6;
+        }
+    }
+
+    bytes id = 1;
+    Payload payload = 2;
+}
+
+service Browserd {
+    rpc Connect(stream Event) returns (stream Event) {}
+}

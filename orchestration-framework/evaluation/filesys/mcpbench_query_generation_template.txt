@@ -1,0 +1,79 @@
+Purpose: Generate 50 complex tasks with deep tool dependencies on given filesystem status. Each task has one query and takes only one line.
+You are a task designer for testing AI agents with MCP tools.
+STEP 1: ANALYZE AND CREATE TOOL DEPENDENCIES
+Analyze these available tools and CREATE meaningful dependencies for your task scenario:
+$TOOL_DESCRIPTIONS
+Consider both:
+A) INHERENT dependencies (tool’s natural input/output relationships)
+• Which tools naturally produce data others consume
+• Standard workflow patterns (search → fetch → analyze)
+B) SCENARIO-BASED dependencies (create logical connections for your task), for example:
+• Tool A’s result determines WHICH tool to use next
+• Tool B’s output sets PARAMETERS for Tool C
+• Tool D validates or contradicts Tool E’s findings
+• Parallel tools whose results must be COMBINED
+• Iterative loops where results trigger RE-ANALYSIS
+Record your dependency analysis in a "dependency_analysis" field that describes:
+• Key tool chains and data flow
+• Critical decision points
+• Parallel vs sequential requirements
+• Cross-server dependencies (for multi-server tasks)
+For multi-server tasks ({server_name}), create CROSS-SERVER dependencies:
+• Server A data influences Server B queries
+• Cross-validation between different data sources
+• One server’s limits trigger fallback to another
+STEP 2: CONSIDER FILESYSTEM CONTEXT
+Analyze the current filesystem status and incorporate it into your task design:
+$FS_STATUS
+STEP 3: DESIGN ONE COMPLEX TASK
+Based on your dependency analysis, create ONE task that:
+• Create MAXIMUM complexity requiring massive tool calls
+• Must use tools from all available servers
+• Must consider inter-servers dependency if more than 1 server available
+You may create the tasks with the following properties if suitable:
+• Deep dependency chains where Tool B needs Tool A’s output, Tool C needs B’s output, etc.
+• Multiple decision branches based on intermediate results
+• Iterative refinement: initial findings lead to deeper investigation
+• Cross-validation: use multiple tools to verify critical findings
+• Data transformation: output from one tool needs processing before next tool
+• Conditional workflows: if condition X, then workflow Y, else workflow Z
+CRITICAL DATA REQUIREMENTS:
+1. ALL tasks MUST be self-contained and executable WITHOUT any external dependencies
+2. NEVER reference external resources like:
+• URLs (like "https://api.example.com" or any external API)
+• Local files (like "user-management.yaml" or "config.json")
+• Databases or external systems
+• "Our API", "our system", "our database"
+3. ALL data must come from either:
+• The provided tools themselves (what they can generate/fetch/calculate)
+• Concrete values you specify in the task (numbers, names, parameters)
+4. NEVER use vague references:
+• "user-provided parameters" or "user-specified"
+• "fetched from database" or "retrieved from external source"
+• "based on user preferences" or "according to input"
+• "specified location/value" or "to be determined"
+5. ALWAYS provide concrete values:
+• Specific numbers (e.g., "analyze heat exchanger with inlet temp 80°C, outlet 60°C, flow
+rate 0.5 kg/s")
+• Named entities (e.g., "analyze weather in San Francisco" not "specified city")
+• For locations: Use city names, landmark names, or general areas, NOT specific street
+addresses
+– GOOD: "San Francisco", "Times Square", "Central Park area", "downtown Seattle"
+– BAD: "123 Main Street", "456 Park Avenue", specific house numbers or street addresses
+• Exact thresholds (e.g., "alert if efficiency drops below 85%" not "desired threshold")
+• ALWAYS USE relative dates/times (e.g., "next 7 days", "past 3 months", "upcoming week"
+not "January 2024" or "2024-01-15")
+6. If the task involves analysis, provide ALL input data in the task description:
+• For calculations: provide all numbers, formulas, and units needed
+• For searches: provide specific search terms and criteria
+• For comparisons: provide specific items with their properties
+• For optimization: provide current values and target metrics
+Requirements:
+1. MUST require multiple tools in a specific sequence
+2. Tool B should need output from Tool A (dependency chain)
+3. Include decision points based on intermediate results
+4. Be realistic and valuable for business/research purposes
+5. Define expected analysis and output format
+6. Task must be immediately executable - agent should never need to ask for more information
+7. Task should be executable and solvable by using the provided tools. You need to pay attention
+to the function and the output of the provided tools.

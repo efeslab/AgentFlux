@@ -1,0 +1,13 @@
+[project]
+name = "mcp-server-hello-world"
+version = "0.0.1"
+description = "A Model Context Protocol server providing tools for hello world queries"
+readme = "README.md"
+requires-python = ">=3.11"
+
+[project.scripts]
+mcp-server-hello-world = "mcp_server_hello_world:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

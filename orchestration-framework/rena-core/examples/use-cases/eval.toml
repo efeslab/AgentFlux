@@ -1,0 +1,158 @@
+name = "use-cases"
+description = "use cases evaluation"
+runs = 2
+
+[[evaluators]]
+type = "llm"
+id = "basic-llm"
+base_prompt = "ONLY OUTPUT JSON. You are an expert evaluator for AI agent responses. Your task is to evaluate if the actual response matches the expected response for a given query."
+
+[evaluators.inference_engine]
+type = "openai"
+model = "o3"
+max_tokens = 2048
+
+[trace_explainer]
+type = "openai"
+model = "gpt-4.1-nano"
+max_tokens = 1024
+
+[[evals]]
+label = "monday-board-stablecoin-items"
+query = "given Monday Test board, output a summary table listing all stablecoin related items (item, partner and partner_size columns)"
+ideal = "should output a summary table listing all stablecoin related items (item, partner and partner_size columns)"
+evaluator = "basic-llm"
+tool_filter = ["monday"]
+
+[[evals]]
+label = "monday-board-summary"
+query = "create a summary table of (Monday) Test board items by assigned people, # of partners they engaged, # of total recorded conversations, keys partners, and prospect deals that should be closed soon"
+ideal = "should create a summary table of (Monday) Test board items by assigned people, # of partners they engaged, # of total recorded conversations, keys partners, and prospect deals that should be closed soon"
+evaluator = "basic-llm"
+tool_filter = ["monday"]
+
+[[evals]]
+label = "notion-meeting-note-progress"
+query = "given the the first and second meeting notes within Meeting Notes notion page, create a progress report (from meeting 1 to 2) within notion Test page"
+ideal = "should create a progress report (from meeting 1 to 2) within notion Test page"
+evaluator = "basic-llm"
+tool_filter = ["notion"]
+
+[[evals]]
+label = "baris-papers-summary"
+query = "given Baris Kasikci 5 latest papers (2025), put a summary of each paper within notion Test page"
+ideal = "should create a summary of Baris Kasikci 5 latest papers in notion Test page"
+evaluator = "basic-llm"
+tool_filter = ["brave_search", "playwright", "notion"]
+
+[[evals]]
+label = "7-day-japan-trip-plan"
+query = "create a 7-day plan visiting 3 cities in Japan (Tokyo, Kyoto, Osaka) within trip.txt file. plan should include 3 activities to do in each city and time to enter and leave each city (if trip.txt exists use a new name)"
+ideal = "should create a 7-day plan visiting 3 cities in Japan (Tokyo, Kyoto, Osaka) within trip.txt file. plan should include 3 activities to do in each city and time to enter and leave each city"
+evaluator = "basic-llm"
+tool_filter = ["brave_search", "playwright", "filesystem_list_allowed_directories", "filesystem_list_directory", "filesystem_write_file"]
+
+[[evals]]
+label = "apple-ar-vr-patents"
+query = "pick 2 latest AR/VR patents from Apple (within year 2025) and create a summary of them within notion Test page"
+ideal = "should pick 2 latest AR/VR patents from Apple (within year 2025) and create a summary of them within notion Test page"
+evaluator = "basic-llm"
+tool_filter = ["brave_search", "playwright", "notion"]
+
+[[evals]]
+label = "github-release-notes"
+query = "summarize the latest release notes for axelar-amplifier"
+ideal = "should find the latest release notes for axelar-amplifier"
+evaluator = "basic-llm"
+tool_filter = ["brave_search", "playwright"]
+
+[[evals]]
+label = "notion-meeting-note-summary"
+query = "summarize the first meeting note within Meeting Notes notion page"
+ideal = "should summarize the 01 Jul, 2025 meeting note within Meeting Notes notion page"
+evaluator = "basic-llm"
+tool_filter = ["notion"]
+
+[[evals]]
+label = "ollama-install"
+query = "check if ollama is installed, if not install it. if to install it some command are not available try to install the command first."
+ideal = "should install curl, then install ollama with its curl command"
+evaluator = "basic-llm"
+tool_filter = ["cli"]
+
+[[evals]]
+label = "axelar-core-team"
+query = "search the core team/founders of Axelar, give me info on their backgrounds and links to linkedin"
+ideal = "it should point out Sergey Gorbunov and Georgios Vlachos, their backgrounds, and link to their linkedin profiles (https://www.linkedin.com/in/sergegorbunov/ and https://www.linkedin.com/in/georgiosvlachos/)"
+evaluator = "basic-llm"
+tool_filter = ["brave_search", "playwright"]
+
+[[evals]]
+label = "find-files-greater-1gb"
+query = "find files > 1GB on my machine, ONLY within top-level allowed directory"
+ideal = "if find any files that are greater than 1GB, should list them. if no files are found, should say so."
+evaluator = "basic-llm"
+tool_filter = ["filesystem"]
+
+[[evals]]
+label = "git-clone-setup"
+query = "checkout https://github.com/anthropics/claude-code and install pre-req packages given instruction in README. if a command is not available, try to install it first."
+ideal = "should first clone the repo, then install the required packages using the provided instructions in the README."
+evaluator = "basic-llm"
+tool_filter = ["filesystem", "cli"]
+
+[[evals]]
+label = "ollama-server"
+query = "run ollama server in background and verify it is running (install it first if not available)"
+ideal = "should run ollama server in background and verify it is running"
+evaluator = "basic-llm"
+tool_filter = ["cli"]
+
+[[evals]]
+label = "system-monitoring-log"
+query = "create a system-monitor.py that checks disk usage, memory usage, and running processes every 5 seconds for 50 seconds. run it and then save all monitoring data to system-monitor.log with timestamps (use another name if file exists)"
+ideal = "should create a monitoring loop that collects system metrics (disk, memory, processes) every 5 seconds for 50 seconds and logs timestamped data to a file"
+evaluator = "basic-llm"
+tool_filter = ["cli", "filesystem_list_allowed_directories", "filesystem_list_directory", "filesystem_write_file"]
+
+[[evals]]
+label = "organize-files"
+query = "organize ONLY pdf files within top-level allowed directory into misc-pdf folder. finally move back all organized pdf files to the top-level allowed directory"
+ideal = "should organize all files into misc folder, then move back all organized files to the top-level allowed directory"
+evaluator = "basic-llm"
+tool_filter = ["filesystem_list_allowed_directories", "filesystem_list_directory", "filesystem_move_file", "filesystem_create_directory"]
+
+[[evals]]
+label = "list-contributors"
+query = "can you list contributors to the project axelarnetwork/axelar-local-dev and link to their github profile"
+ideal = "should find project github page, then list 14 persons with their github profile link"
+evaluator = "basic-llm"
+tool_filter = ["brave_search", "playwright"]
+
+[[evals]]
+label = "landing-page-notion-todo"
+query = "first create a todo list (3 steps) within notion Test page on developing a simple one-page landing page (react app) for a project named rena (working on running ai models locally). Then, ONLY execute the first step of todo plan (if a command is not available install it first)"
+ideal = "should create a todo list (3 steps) within notion Test page on developing a simple one-page landing page (react app) for a project named rena (working on running ai models locally), and at least execute the first step"
+evaluator = "basic-llm"
+tool_filter = ["notion", "cli"]
+
+[[evals]]
+label = "download-gated-llama-model"
+query = "Download the Llama-3.1-8B model from Hugging Face to a models folder. HF_TOKEN = <your-hf-token>"
+ideal = "should search for Llama-3.1-8B on Hugging Face, find the model repository (meta-llama/Llama-3.1-8B), create models directory in the target directory, install huggingface-hub if needed, and use it to download the model. The final result should be the model files downloaded in /models/Llama-3.1-8B in the target directory"
+evaluator = "basic-llm"
+tool_filter = ["brave_search", "cli", "filesystem"]
+
+[[evals]]
+label = "download-public-bert-model"
+query = "Download the bert-base-uncased model from Hugging Face to a models folder. HF_TOKEN = <your-hf-token>"
+ideal = "should search for bert-base-uncased on Hugging Face, find the model repository (google-bert/bert-base-uncased), create models directory in the target directory, install huggingface-hub if needed, and use it to download the model. The final result should be the model files downloaded in /models/bert-base-uncased in the target directory"
+evaluator = "basic-llm"
+tool_filter = ["brave_search", "cli", "filesystem"]
+
+[[evals]]
+label = "github-earliest-version-with-commit"
+query = "find the earliest release of the mendableai/firecrawl github repo that has commit f4714f4"
+ideal = "should identify v1.13.0 release as the earliest version containing commit f4714f48491e53397ca21532f1900b41b56c1f35 (committed on June 25, 2025) by determining the date of this commit, visiting a browser, checking the releases/tags page of the repo, and binary searching through repo versions to find the earliest repo version that includes the commit"
+evaluator = "basic-llm"
+tool_filter = ["brave_search", "playwright"]

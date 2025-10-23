@@ -1,0 +1,25 @@
+FROM python:3.11-slim-bookworm
+
+USER root
+
+RUN apt-get update && apt-get install -y \
+    curl \
+    && curl -fsSL https://deb.nodesource.com/setup_22.x | bash - \
+    && apt-get install -y nodejs \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN npx -y playwright@1.53.0 install --with-deps
+RUN npx playwright install firefox
+
+WORKDIR /app
+
+COPY ./rena-runtime/pyproject.toml /app/rena-runtime/
+
+WORKDIR /app/rena-runtime
+RUN pip install --upgrade build
+RUN pip install -e .
+
+COPY ./rena-runtime /app/rena-runtime
+
+ENV PYTHONPATH=.

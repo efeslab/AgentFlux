@@ -1,0 +1,99 @@
+name = "test-use-cases"
+description = "test use cases evaluation"
+runs = 1
+
+[[evaluators]]
+type = "basic_match"
+id = "basic-match"
+
+[[evaluators]]
+type = "llm"
+id = "basic-llm"
+base_prompt = """You are an expert evaluator for AI agent responses. Your task is to evaluate if the actual response matches the expected response for a given query.
+
+Consider the following criteria when scoring:
+- Correctness: Does the response achieve the intended goal?
+- Completeness: Are all required elements present?
+- Format: Is the response well-formatted and clear?
+- Efficiency: Was the task completed optimally?
+- Error handling: Were errors handled appropriately?"""
+
+[evaluators.inference_engine]
+type = "openai"
+model = "o4-mini"
+max_tokens = 4096
+
+[trace_explainer]
+type = "openai"
+model = "o4-mini"
+max_tokens = 2048
+
+[[evals]]
+label = "say-hello-to-bob"
+query = "say hello to Bob"
+ideal = "Hello, Bob!"
+evaluator = "basic-match"
+tool_filter = ["hello_world"]
+
+[[evals]]
+label = "say-goodbye-to-bob"
+query = "say goodbye to Bob"
+ideal = "it should fail since there is no goodbye tool in hello_world mcp server"
+evaluator = "basic-llm"
+tool_filter = ["hello_world"]
+
+[[evals]]
+label = "valid-nodejs-package"
+query = "create a valid simple Node.Js package within workspace directory (create if not exists). finally list the workspace directory and the content of all files within it"
+ideal = "it should create package.json in workspace and package.json should have name and version fields"
+evaluator = "basic-llm"
+tool_filter = ["filesystem"]
+
+[[evals]]
+label = "maze-directory"
+query = "create a maze top level directory that only following path reach to flag.txt: forward, forward, left, right. Starting point is the /maze directory."
+ideal = "it should create maze directory and flag.txt file in it. There should exists flag.txt file: /maze/forward/forward/left/right/flag.txt"
+evaluator = "basic-llm"
+tool_filter = ["filesystem"]
+
+[[evals]]
+label = "rick-and-morty-catch-phrase"
+query = "given Morty Smith wiki page and Rick Sanchez wiki page in fandom website, what are mentioned as Rick's catchphrase and Morty's catchphrase?"
+ideal = "Wubba Lubba Dub-Dub! Aw jeez, Rick!"
+evaluator = "basic-llm"
+tool_filter = ["brave_search", "playwright"]
+
+[[evals]]
+label = "rick-and-morty-catch-phrase-parsing"
+query = "given Rick Sanchez wiki page in fandom website, what is the phrase that repeats in Rick's catchphrase?"
+ideal = "Dub"
+evaluator = "basic-llm"
+tool_filter = ["brave_search", "playwright"]
+
+[[evals]]
+label = "axl-current-price"
+query = "Did I mention the current price of AXL token in my obsidian notes?"
+ideal = "No"
+evaluator = "basic-llm"
+tool_filter = ["obsidian"]
+
+[[evals]]
+label = "axelar-amplifier-launch-date"
+query = "Lets find out if Axelar already launched Amplifier or not (both through their website and my obsidian notes)?"
+ideal = "Yes"
+evaluator = "basic-llm"
+tool_filter = ["brave_search", "playwright", "obsidian"]
+
+[[evals]]
+label = "github-repo-size"
+query = "what is the size of github.com/gray-floyd/mock repo when stored as a single txt file (in bytes)?"
+ideal = "1,764"
+evaluator = "basic-llm"
+tool_filter = ["repomix", "filesystem"]
+
+[[evals]]
+label = "github-repo-size-replaced"
+query = "what is the size of github.com/gray-floyd/mock repo when stored as a single txt file (in bytes) when all Mock keywords are replaced with MockyMock?"
+ideal = "1,775"
+evaluator = "basic-llm"
+tool_filter = ["repomix", "filesystem"]

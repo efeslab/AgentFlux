@@ -1,4 +1,0 @@
-[submodule "rena-core-proxy/rena_proxy"]
-	path = rena-core-proxy/rena_proxy
-	url = git@github.com:JustinJin04/rena_proxy.git
-	branch = release
