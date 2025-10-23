@@ -29,7 +29,7 @@ def read_last_line(path: Path) -> str:
 
 def run_query_baseline(rena_port: int, model: str, url: str, category: str, query: str) -> str:
     # get temp config file content
-    template_path = ROOT_DIR / "config" / category / "browserd_template_baseline.txt"
+    template_path = ROOT_DIR / "orchestration_framework" / "evaluation" / category / "browserd_template_baseline.txt"
     with open(template_path, "r") as f:
         template = Template(f.read())
     mapping = {
@@ -49,7 +49,7 @@ def run_query_baseline(rena_port: int, model: str, url: str, category: str, quer
             traj_path = Path(traj_f.name).resolve()   # get temp traj file path
 
             # Project directory (already absolute)
-            BROWSERD_DIR = ROOT_DIR / "orchestration-framework" / "rena-core" / "rena-browserd"
+            BROWSERD_DIR = ROOT_DIR / "orchestration_framework" / "rena-core" / "rena-browserd"
             os.chdir(BROWSERD_DIR)
 
             # Log path
@@ -86,7 +86,7 @@ def run_query_baseline(rena_port: int, model: str, url: str, category: str, quer
                 except Exception as e:
                     print(f"Encountered error: {e}, retrying...{tries+1}/3")
                     tries += 1
-                    if tries >=3:
+                    if tries >= 1:
                         # keep error state and not revert
                         break
             
@@ -95,7 +95,7 @@ def run_query_baseline(rena_port: int, model: str, url: str, category: str, quer
 
 def run_query_proxy(rena_port: int, proxy_port: int, category: str, query: str) -> str:
     # get temp config file content
-    template_path = ROOT_DIR / "config" / category / "browserd_template.txt"
+    template_path = ROOT_DIR / "orchestration_framework" / "evaluation" / category / "browserd_template.txt"
     with open(template_path, "r") as f:
         template = Template(f.read())
     mapping = {
@@ -114,7 +114,7 @@ def run_query_proxy(rena_port: int, proxy_port: int, category: str, query: str) 
             traj_path = Path(traj_f.name).resolve()   # get temp traj file path
 
             # Project directory (already absolute)
-            BROWSERD_DIR = ROOT_DIR / "orchestration-framework" / "rena-core" / "rena-browserd"
+            BROWSERD_DIR = ROOT_DIR / "orchestration_framework" / "rena-core" / "rena-browserd"
             os.chdir(BROWSERD_DIR)
 
             # Log path
@@ -159,12 +159,11 @@ def run_query_proxy(rena_port: int, proxy_port: int, category: str, query: str) 
             return final_last_line
 
 def run_baseline(category, model, url, queries_path, output_path, start=None, end=None):
+    # print(category, model, url, queries_path, output_path, start, end)
     rena_port, _ = get_comm_ports(2)
     queries_path = Path(queries_path)
     traj_path = Path(output_path)
     traj_path.parent.mkdir(parents=True, exist_ok=True)
-    print(f"traj_path: {traj_path}")
-    print(f"queries_path: {queries_path}")
 
     # count the lines of traj_path
     if start is None:
@@ -176,6 +175,10 @@ def run_baseline(category, model, url, queries_path, output_path, start=None, en
     if end is None:
         with open(queries_path, "r") as f:
             end = len(f.readlines())
+
+    print(f"traj_path: {traj_path}")
+    print(f"queries_path: {queries_path}")
+    print(f"start: {start}, end: {end}")
 
     queries = queries_path.read_text().splitlines()[start:end]
     with open(traj_path, "a") as f:
@@ -194,7 +197,7 @@ def run_agentflux(category, queries_path, output_path, classifier_config_path=No
     queries_path = Path(queries_path)
     traj_path = Path(output_path)
     traj_path.parent.mkdir(parents=True, exist_ok=True)
-    tool_list = ROOT_DIR / "config" / category / "tool_list.json"
+    tool_list = ROOT_DIR / "inference" / "agentflux" / "config" / category / "tool_list.json"
     print(f"traj_path: {traj_path}")
     print(f"queries_path: {queries_path}")
     print(f"classifier_config_path: {classifier_config_path}")

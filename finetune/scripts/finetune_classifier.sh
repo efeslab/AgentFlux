@@ -5,11 +5,11 @@ batch_size=${2:-4}
 accumulate_step=${3:-4}
 num_train_epochs=${4:-4}
 
-train_data_path="./finetune/results/trajectories/$category/train/cleaned_train.jsonl"
-validation_data_path="./finetune/results/trajectories/$category/eval/cleaned_eval.jsonl"
-chat_template_path="./finetune/classifier.jinja"
-output_dir="./finetune/results/finetune_output/$category/classifier"
-log_path="./finetune/results/log/$category/classifier.log"
+train_data_path="./$category/results/trajectories/train/cleaned_train.jsonl"
+validation_data_path="./$category/results/trajectories/eval/cleaned_eval.jsonl"
+chat_template_path="./classifier.jinja"
+output_dir="./$category/results/finetune_output/classifier"
+log_path="./$category/results/log/classifier.log"
 
 mkdir -p "$output_dir"
 mkdir -p "$(dirname "$log_path")"
@@ -24,7 +24,7 @@ echo "Steps per epoch: $steps_per_epoch"
 echo "Eval steps: $eval_steps"
 
 export PYTHONUNBUFFERED=1
-python finetune/unsloth-cli-split.py \
+python unsloth-cli-split.py \
  --model_name unsloth/Qwen2.5-7B-Instruct \
  --max_seq_length 32768 \
  --r 32 \

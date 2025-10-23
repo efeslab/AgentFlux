@@ -5,16 +5,16 @@ batch_size=${2:-4}
 accumulate_step=${3:-4}
 num_train_epochs=${4:-4}
 
-train_dir="./finetune/results/trajectories/$category/train/tool_adaptors"
+train_dir="./$category/results/trajectories/train/tool_adaptors"
 for file in "$train_dir"/*.jsonl; do
   tool_name=$(basename "$file" .jsonl)
   echo "Finetuning tool adapter for tool: $tool_name"
 
-  train_json_file_path="./finetune/results/trajectories/$category/train/tool_adaptors/$tool_name.jsonl"
-  eval_json_file_path="./finetune/results/trajectories/$category/eval/tool_adaptors/$tool_name.jsonl"
-  chat_template_path="./finetune/results/chat_templates/$category/$tool_name.jinja"
-  output_dir="./finetune/results/finetune_output/$category/tool_adaptors/$tool_name"
-  log_file_path="./finetune/results/log/$category/tool_adaptors/$tool_name.log"
+  train_json_file_path="./$category/results/trajectories/train/tool_adaptors/$tool_name.jsonl"
+  eval_json_file_path="./$category/results/trajectories/eval/tool_adaptors/$tool_name.jsonl"
+  chat_template_path="./$category/results/chat_templates/tool_adaptors/$tool_name.jinja"
+  output_dir="./$category/results/finetune_output/tool_adaptors/$tool_name"
+  log_file_path="./$category/results/log/tool_adaptors/$tool_name.log"
 
   mkdir -p "$output_dir"
   mkdir -p "$(dirname "$log_file_path")"
@@ -29,7 +29,7 @@ for file in "$train_dir"/*.jsonl; do
   echo "Eval steps: $eval_steps"
 
   export PYTHONUNBUFFERED=1
-  python finetune/unsloth-cli-split.py \
+  python unsloth-cli-split.py \
     --model_name unsloth/Qwen2.5-7B-Instruct \
     --max_seq_length 32768 \
     --r 32 \
@@ -59,3 +59,4 @@ for file in "$train_dir"/*.jsonl; do
     --validation_json_file $eval_json_file_path \
     --chat_template_path "$chat_template_path" \
     2>&1 | tee "$log_file_path"
+done

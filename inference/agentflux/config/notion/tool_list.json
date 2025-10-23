@@ -1,0 +1,190 @@
+[
+  {
+    "function": {
+      "description": "Notion | Retrieve a user",
+      "name": "API-get-user",
+      "parameters": {
+        "$defs": {},
+        "properties": {
+          "user_id": {
+            "format": "uuid",
+            "type": "string"
+          }
+        },
+        "required": [
+          "user_id"
+        ],
+        "type": "object"
+      }
+    },
+    "type": "function"
+  },
+  {
+    "function": {
+      "description": "Notion | List all users",
+      "name": "API-get-users",
+      "parameters": {
+        "$defs": {},
+        "properties": {
+          "page_size": {
+            "default": 100,
+            "description": "The number of items from the full list desired in the response. Maximum: 100",
+            "type": "integer"
+          },
+          "start_cursor": {
+            "description": "If supplied, this endpoint will return a page of results starting after the cursor provided. If not supplied, this endpoint will return the first page of results.",
+            "type": "string"
+          }
+        },
+        "required": [],
+        "type": "object"
+      }
+    },
+    "type": "function"
+  },
+  {
+    "function": {
+      "description": "Notion | Retrieve your token's bot user",
+      "name": "API-get-self",
+      "parameters": {
+        "$defs": {},
+        "properties": {},
+        "required": [],
+        "type": "object"
+      }
+    },
+    "type": "function"
+  },
+  {
+    "function": {
+      "description": "Notion | Search by title",
+      "name": "API-post-search",
+      "parameters": {
+        "$defs": {},
+        "properties": {
+          "filter": {
+            "additionalProperties": true,
+            "description": "A set of criteria, `value` and `property` keys, that limits the results to either only pages or only databases. Possible `value` values are `\"page\"` or `\"database\"`. The only supported `property` value is `\"object\"`.",
+            "properties": {
+              "property": {
+                "description": "The name of the property to filter by. Currently the only property you can filter by is the object type.  Possible values include `object`.   Limitation: Currently the only filter allowed is `object` which will filter by type of object (either `page` or `database`)",
+                "type": "string"
+              },
+              "value": {
+                "description": "The value of the property to filter the results by.  Possible values for object type include `page` or `database`.  **Limitation**: Currently the only filter allowed is `object` which will filter by type of object (either `page` or `database`)",
+                "type": "string"
+              }
+            },
+            "type": "object"
+          },
+          "page_size": {
+            "default": 100,
+            "description": "The number of items from the full list to include in the response. Maximum: `100`.",
+            "format": "int32",
+            "type": "integer"
+          },
+          "query": {
+            "description": "The text that the API compares page and database titles against.",
+            "type": "string"
+          },
+          "sort": {
+            "additionalProperties": true,
+            "description": "A set of criteria, `direction` and `timestamp` keys, that orders the results. The **only** supported timestamp value is `\"last_edited_time\"`. Supported `direction` values are `\"ascending\"` and `\"descending\"`. If `sort` is not provided, then the most recently edited results are returned first.",
+            "properties": {
+              "direction": {
+                "description": "The direction to sort. Possible values include `ascending` and `descending`.",
+                "type": "string"
+              },
+              "timestamp": {
+                "description": "The name of the timestamp to sort against. Possible values include `last_edited_time`.",
+                "type": "string"
+              }
+            },
+            "type": "object"
+          },
+          "start_cursor": {
+            "description": "A `cursor` value returned in a previous response that If supplied, limits the response to results starting after the `cursor`. If not supplied, then the first page of results is returned. Refer to [pagination](https://developers.notion.com/reference/intro#pagination) for more details.",
+            "type": "string"
+          }
+        },
+        "required": [],
+        "type": "object"
+      }
+    },
+    "type": "function"
+  },
+  {
+    "function": {
+      "description": "Notion | Retrieve block children",
+      "name": "API-get-block-children",
+      "parameters": {
+        "$defs": {},
+        "properties": {
+          "block_id": {
+            "description": "Identifier for a [block](ref:block)",
+            "type": "string"
+          },
+          "page_size": {
+            "default": 100,
+            "description": "The number of items from the full list desired in the response. Maximum: 100",
+            "format": "int32",
+            "type": "integer"
+          },
+          "start_cursor": {
+            "description": "If supplied, this endpoint will return a page of results starting after the cursor provided. If not supplied, this endpoint will return the first page of results.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "block_id"
+        ],
+        "type": "object"
+      }
+    },
+    "type": "function"
+  },
+  {
+    "function": {
+      "description": "Notion | Retrieve a block",
+      "name": "API-retrieve-a-block",
+      "parameters": {
+        "$defs": {},
+        "properties": {
+          "block_id": {
+            "description": "Identifier for a Notion block",
+            "type": "string"
+          }
+        },
+        "required": [
+          "block_id"
+        ],
+        "type": "object"
+      }
+    },
+    "type": "function"
+  },
+  {
+    "function": {
+      "description": "Notion | Retrieve a page",
+      "name": "API-retrieve-a-page",
+      "parameters": {
+        "$defs": {},
+        "properties": {
+          "filter_properties": {
+            "description": "A list of page property value IDs associated with the page. Use this param to limit the response to a specific page property value or values. To retrieve multiple properties, specify each page property ID. For example: `?filter_properties=iAk8&filter_properties=b7dh`.",
+            "type": "string"
+          },
+          "page_id": {
+            "description": "Identifier for a Notion page",
+            "type": "string"
+          }
+        },
+        "required": [
+          "page_id"
+        ],
+        "type": "object"
+      }
+    },
+    "type": "function"
+  }
+]

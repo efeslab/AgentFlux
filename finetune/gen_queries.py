@@ -9,6 +9,8 @@ import asyncio
 from typing import Coroutine
 from openai import AsyncOpenAI
 
+ROOT_DIR = Path(__file__).parent.parent
+
 async def async_call(client: AsyncOpenAI, user_request: str) -> str:
     resp = await client.responses.create(
         model="gpt-5",
@@ -27,8 +29,8 @@ async def main():
     parser.add_argument("--output_path", type=str, required=True, help="Path to save the generated queries")
     args = parser.parse_args()
 
-    tool_list_path = Path("config") / args.category / "tool_list.json"
-    prompt_template_path = Path("config") / args.category / "query_generation_template.txt"
+    tool_list_path = ROOT_DIR / "inference" / "agentflux" / "config" / args.category / "tool_list.json"
+    prompt_template_path = ROOT_DIR / "finetune" / args.category / "query_generation_template.txt"
     output_path = Path(args.output_path)
     output_path.parent.mkdir(parents=True, exist_ok=True)
 

@@ -1,0 +1,70 @@
+{
+  "all_monday_api": {
+    "model": "all_monday_api",
+    "port": 8010
+  },
+  "create_board": {
+    "model": "create_board",
+    "port": 8010
+  },
+  "create_column": {
+    "model": "create_column",
+    "port": 8010
+  },
+  "create_doc": {
+    "model": "create_doc",
+    "port": 8010
+  },
+  "create_item": {
+    "model": "create_item",
+    "port": 8010
+  },
+  "create_update": {
+    "model": "create_update",
+    "port": 8010
+  },
+  "get_board_activity": {
+    "model": "get_board_activity",
+    "port": 8010
+  },
+  "get_board_info": {
+    "model": "get_board_info",
+    "port": 8010
+  },
+  "get_board_items_by_name": {
+    "model": "get_board_items_by_name",
+    "port": 8010
+  },
+  "get_column_type_info": {
+    "model": "get_column_type_info",
+    "port": 8010
+  },
+  "get_graphql_schema": {
+    "model": "get_graphql_schema",
+    "port": 8010
+  },
+  "get_type_details": {
+    "model": "get_type_details",
+    "port": 8010
+  },
+  "get_users_by_name": {
+    "model": "get_users_by_name",
+    "port": 8010
+  },
+  "list_workspaces": {
+    "model": "list_workspaces",
+    "port": 8010
+  },
+  "read_docs": {
+    "model": "read_docs",
+    "port": 8010
+  },
+  "workspace_info": {
+    "model": "workspace_info",
+    "port": 8010
+  },
+  "summarize": {
+    "model": "unsloth/Qwen2.5-7B-Instruct",
+    "port": 8010
+  }
+}

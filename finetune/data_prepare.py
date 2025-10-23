@@ -10,6 +10,8 @@ from pathlib import Path
 from transformers import AutoTokenizer
 from datasets import Dataset
 
+ROOT_DIR = Path(__file__).parent.parent
+
 def clean_dataset(trajs: list[dict], tokenizer) -> list[dict]:
     """
     Clean the dataset by:
@@ -149,8 +151,7 @@ if __name__ == "__main__":
     parser.add_argument("--category", type=str, required=True, help="Category name for MCP Tools")
     args = parser.parse_args()
 
-    results_dir = Path(__file__).parent / "results"
-    traj_path = results_dir / "trajectories" / args.category / "all_trajectories.jsonl"
+    traj_path = ROOT_DIR / "finetune" / args.category / "results" / "trajectories" / "all_trajectories.jsonl"
 
     trajs = [json.loads(line) for line in open(traj_path, "r")]
     tokenizer = AutoTokenizer.from_pretrained("unsloth/Qwen2.5-7B-Instruct")
@@ -162,7 +163,7 @@ if __name__ == "__main__":
     print(f"Train size: {len(cleaned_trains)}, eval size: {len(cleaned_evals)}, Test size: {len(cleaned_tests)}")
 
     # train
-    train_dir = results_dir / "trajectories" / args.category / "train"
+    train_dir = ROOT_DIR / "finetune" / args.category / "results" / "trajectories" / "train"
     write_to_file(cleaned_trains, train_dir / "cleaned_train.jsonl")    # used for train classifier
     split_tools_train = split_tools(cleaned_trains)
     tool_adaptors_path = train_dir / "tool_adaptors"
@@ -171,7 +172,7 @@ if __name__ == "__main__":
         print(f"Saved {len(tool_trajs)} training examples for tool {tool_name} to {tool_adaptors_path / f'{tool_name}.jsonl'}")
 
     # eval
-    eval_dir = results_dir / "trajectories" / args.category / "eval"
+    eval_dir = ROOT_DIR / "finetune" / args.category / "results" / "trajectories" / "eval"
     write_to_file(cleaned_evals, eval_dir / "cleaned_eval.jsonl")
     split_tools_eval = split_tools(cleaned_evals)
     tool_adaptors_path = eval_dir / "tool_adaptors"
@@ -180,7 +181,7 @@ if __name__ == "__main__":
         print(f"Saved {len(tool_trajs)} eval examples for tool {tool_name} to {tool_adaptors_path / f'{tool_name}.jsonl'}")
 
     # test
-    test_dir = results_dir / "trajectories" / args.category / "test"
+    test_dir = ROOT_DIR / "finetune" / args.category / "results" / "trajectories" / "test"
     write_to_file(cleaned_tests, test_dir / "cleaned_test.jsonl")
     split_tools_test = split_tools(cleaned_tests)
     tool_adaptors_path = test_dir / "tool_adaptors"

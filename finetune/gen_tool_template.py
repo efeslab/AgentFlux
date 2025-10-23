@@ -4,9 +4,11 @@ import argparse
 from pathlib import Path
 from string import Template
 
+ROOT_DIR = Path(__file__).parent.parent
+
 def get_tool_list(category: str) -> list[str]:
     current_path = Path(__file__)
-    train_data_dir = current_path.parent / "results" / "trajectories" / category / "train" / "tool_adaptors"
+    train_data_dir = ROOT_DIR / "finetune" / category / "results" / "trajectories" / "train" / "tool_adaptors"
     tool_json_paths = glob.glob(f"{train_data_dir.resolve()}/*.jsonl")
     tool_list = []
     for tool_json_path in tool_json_paths:
@@ -19,11 +21,11 @@ if __name__ == "__main__":
     parser.add_argument("--category", type=str, required=True, help="Name of the category to generate template for")
     args = parser.parse_args()
 
-    with open("./finetune/tool_template.jinja", "r") as f:
+    with open(ROOT_DIR / "finetune" / "tool_template.jinja", "r") as f:
         template_str = f.read()
     tool_list = get_tool_list(args.category)
 
-    output_dir = Path(__file__).parent / "results" / "chat_templates" / args.category
+    output_dir = ROOT_DIR / "finetune" / args.category / "results" / "chat_templates" / args.category
     output_dir.mkdir(parents=True, exist_ok=True)
     for tool in tool_list:
         filled = Template(template_str).substitute(TARGET_TOOL=tool)

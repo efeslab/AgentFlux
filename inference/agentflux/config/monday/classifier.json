@@ -1,0 +1,23 @@
+  {
+  "model": "allmask",
+  "port": 8010,
+  "tools": [
+    "get_board_items_by_name",
+    "create_item",
+    "create_update",
+    "get_board_activity",
+    "get_board_info",
+    "get_users_by_name",
+    "create_board",
+    "create_column",
+    "all_monday_api",
+    "get_graphql_schema",
+    "get_type_details",
+    "read_docs",
+    "workspace_info",
+    "list_workspaces",
+    "create_doc",
+    "get_column_type_info",
+    "summarize"
+  ]
+}

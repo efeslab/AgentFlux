@@ -1,8 +1,10 @@
 # input: results/queries/{category}/all_queries.txt
 # output: results/trajectories/{category}/all_trajectories.jsonl
-
+import sys
 import argparse
-from rena_core_proxy import run_baseline
+from pathlib import Path
+sys.path.append(Path(__file__).parent.parent.resolve().as_posix())
+from orchestration_framework import run_baseline
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()

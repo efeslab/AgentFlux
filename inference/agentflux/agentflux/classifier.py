@@ -78,7 +78,7 @@ class FinetunedClassifier(Classifier):
             raise ValueError("FinetunedClassifier Failed")
 
         # logger.info(f"FinetunedClassifier response: {response}")
-        print(f"response: {response}")
+        # print(f"response: {response}")
         return self.get_most_occurance_tool_name(response.json())
 
 class GPTClassifier(Classifier):

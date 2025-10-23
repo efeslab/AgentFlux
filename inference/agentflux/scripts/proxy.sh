@@ -1,10 +1,11 @@
 #!/bin/bash
 
-category=filesys
+category=${1:-filesys}
+
 port=9015
-classifier=../config/filesys/classifier.json
-tool_adapters=../config/filesys/tool_adaptor.json
-tool_list=../config/filesys/tool_list.json
+classifier=config/$category/classifier.json
+tool_adapters=config/$category/tool_adapters.json
+tool_list=config/$category/tool_list.json
 
 python -m agentflux.proxy \
   --category $category \

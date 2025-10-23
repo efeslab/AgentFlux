@@ -1,0 +1,20 @@
+container_comm_host = "0.0.0.0"
+container_comm_port = $RENA_PORT
+runtime_path = "../rena-runtime"
+
+[inference_engine]
+type = "openai"
+model = "proxier"
+max_tokens = 20480
+url = "http://0.0.0.0:$PROXY_PORT"
+temperature = 0
+
+[discovery]
+type = "static"
+
+[[discovery.apps]]
+name = "monday"
+agent_protocol = "mcp"
+runtime = "nodejs"
+command = "npx"
+args = ["mcp-remote", "https://mcp.monday.com/sse", "--header", "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ0aWQiOjUzOTk5MDA5MiwiYWFpIjoxMSwidWlkIjo3ODQ5ODk5OCwiaWFkIjoiMjAyNS0wNy0xNlQyMDo1ODo0OS4wMDBaIiwicGVyIjoibWU6d3JpdGUiLCJhY3RpZCI6MzA0MjMzMzIsInJnbiI6InVzZTEifQ.QYAKbZcmhYlSmBdtPypPv_W0I5lfd_FKjLovIuPGDwg"]

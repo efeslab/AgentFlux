@@ -1,5 +1,5 @@
 {
-  "model": "filesys_refinetuned",
+  "model": "unmask_75",
   "port": 8010,
   "tools": [
       "read_file",

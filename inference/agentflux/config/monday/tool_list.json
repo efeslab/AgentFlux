@@ -1,32 +1,6 @@
 [
   {
     "function": {
-      "description": "Execute any Monday.com API operation by generating GraphQL queries and mutations dynamically. Make sure you ask only for the fields you need and nothing more. When providing the query/mutation - use get_graphql_schema and get_type_details tools first to understand the schema before crafting your query.",
-      "name": "all_monday_api",
-      "parameters": {
-        "$schema": "http://json-schema.org/draft-07/schema#",
-        "additionalProperties": false,
-        "properties": {
-          "query": {
-            "description": "Custom GraphQL query/mutation. you need to provide the full query / mutation",
-            "type": "string"
-          },
-          "variables": {
-            "description": "JSON string containing the variables for the GraphQL operation",
-            "type": "string"
-          }
-        },
-        "required": [
-          "query",
-          "variables"
-        ],
-        "type": "object"
-      }
-    },
-    "type": "function"
-  },
-  {
-    "function": {
       "description": "Get items by board id and term",
       "name": "get_board_items_by_name",
       "parameters": {
@@ -104,6 +78,35 @@
         "required": [
           "itemId",
           "body"
+        ],
+        "type": "object"
+      }
+    },
+    "type": "function"
+  },
+  {
+    "function": {
+      "description": "Get board activity logs for a specified time range (defaults to last 30 days)",
+      "name": "get_board_activity",
+      "parameters": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "additionalProperties": false,
+        "properties": {
+          "boardId": {
+            "description": "The id of the board to get activity for",
+            "type": "number"
+          },
+          "fromDate": {
+            "description": "Start date for activity range (ISO8601DateTime format). Defaults to 30 days ago",
+            "type": "string"
+          },
+          "toDate": {
+            "description": "End date for activity range (ISO8601DateTime format). Defaults to now",
+            "type": "string"
+          }
+        },
+        "required": [
+          "boardId"
         ],
         "type": "object"
       }
@@ -266,6 +269,32 @@
           "boardId",
           "columnType",
           "columnTitle"
+        ],
+        "type": "object"
+      }
+    },
+    "type": "function"
+  },
+  {
+    "function": {
+      "description": "Execute any Monday.com API operation by generating GraphQL queries and mutations dynamically. Make sure you ask only for the fields you need and nothing more. When providing the query/mutation - use get_graphql_schema and get_type_details tools first to understand the schema before crafting your query.",
+      "name": "all_monday_api",
+      "parameters": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "additionalProperties": false,
+        "properties": {
+          "query": {
+            "description": "Custom GraphQL query/mutation. you need to provide the full query / mutation",
+            "type": "string"
+          },
+          "variables": {
+            "description": "JSON string containing the variables for the GraphQL operation",
+            "type": "string"
+          }
+        },
+        "required": [
+          "query",
+          "variables"
         ],
         "type": "object"
       }

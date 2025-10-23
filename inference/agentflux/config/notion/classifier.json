@@ -1,0 +1,14 @@
+{
+  "model": "notion_classifier",
+  "port": 8010,
+  "tools": [
+    "API-get-block-children",
+    "API-get-self",
+    "API-get-user",
+    "API-get-users",
+    "API-post-search",
+    "API-retrieve-a-block",
+    "API-retrieve-a-page",
+    "summarize"
+  ]
+}

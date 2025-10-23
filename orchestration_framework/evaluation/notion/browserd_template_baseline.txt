@@ -1,0 +1,21 @@
+container_comm_host = "0.0.0.0"
+container_comm_port = $RENA_PORT
+runtime_path = "../rena-runtime"
+
+[inference_engine]
+type = "openai"
+model = "$MODEL"
+max_tokens = 20480
+temperature = 0
+url = "$URL"
+
+[discovery]
+type = "static"
+
+[[discovery.apps]]
+name = "notion"
+agent_protocol = "mcp"
+runtime = "nodejs"
+command = "npx"
+args = ["-y", "@notionhq/notion-mcp-server"]
+env = { "OPENAPI_MCP_HEADERS" = "{\"Authorization\": \"Bearer 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\", \"Notion-Version\": \"2022-06-28\" }" }

@@ -1,0 +1,34 @@
+{
+  "API-get-block-children": {
+    "model": "API-get-block-children",
+    "port": 8010
+  },
+  "API-get-self": {
+    "model": "API-get-self",
+    "port": 8010
+  },
+  "API-get-user": {
+    "model": "API-get-user",
+    "port": 8010
+  },
+  "API-get-users": {
+    "model": "API-get-users",
+    "port": 8010
+  },
+  "API-post-search": {
+    "model": "API-post-search",
+    "port": 8010
+  },
+  "API-retrieve-a-block": {
+    "model": "API-retrieve-a-block",
+    "port": 8010
+  },
+  "API-retrieve-a-page": {
+    "model": "API-retrieve-a-page",
+    "port": 8010
+  },
+  "summarize": {
+    "model": "unsloth/Qwen2.5-7B-Instruct",
+    "port": 8010
+  }
+}
