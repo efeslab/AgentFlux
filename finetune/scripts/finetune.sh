@@ -1,6 +1,7 @@
 #!/bin/bash
 
 category=${1:-filesys}
+base_model_folder=${2:-=./base_models/Qwen2.5-7B-Instruct}
 
 results_dir=$category/results
 queries_dir=$results_dir/queries
@@ -30,7 +31,7 @@ python data_prepare.py \
 # generate tool template that used for finetuning tool adapters
 python gen_tool_template.py \
   --category $category \
-  --model_folder ./base_models/Qwen2.5-7B-Instruct
+  --model_folder $base_model_folder
 exit 0
 # finetune classifier
 bash scripts/finetune_classifier.sh $category

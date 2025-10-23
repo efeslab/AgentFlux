@@ -4,10 +4,12 @@ category=${1:-filesys}
 batch_size=${2:-4}
 accumulate_step=${3:-4}
 num_train_epochs=${4:-4}
+base_model=${5:-unsloth/Qwen2.5-7B-Instruct}
+base_model_folder=${6:-./base_models/Qwen2.5-7B-Instruct}
 
 train_data_path="./$category/results/trajectories/train/cleaned_train.jsonl"
 validation_data_path="./$category/results/trajectories/eval/cleaned_eval.jsonl"
-chat_template_path="./base_models/Qwen2.5-7B-Instruct/classifier.jinja"
+chat_template_path="$base_model_folder/classifier.jinja"
 output_dir="./$category/results/finetune_output/classifier"
 log_path="./$category/results/log/classifier.log"
 
@@ -25,7 +27,7 @@ echo "Eval steps: $eval_steps"
 
 export PYTHONUNBUFFERED=1
 python unsloth-cli-split.py \
- --model_name unsloth/Qwen2.5-7B-Instruct \
+ --model_name $base_model \
  --max_seq_length 32768 \
  --r 32 \
  --lora_alpha 64 \

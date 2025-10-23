@@ -157,7 +157,12 @@ AgentFlux/
 │   ├── gen_tool_template.py            #    Generate Jinja2 templates per tool
 │   ├── classifier.jinja                #    Chat template for classifier model
 │   ├── tool_template.jinja             #    Chat template for tool adapters
-│   └── results/                        #    Training outputs, logs, model checkpoints
+│   ├── results/                        #    Training outputs, logs, model checkpoints
+│   ├── base_models/                    #    Base-model-specific chat templates
+|   └── scripts/                        # 🔧 Automation Scripts 
+|       ├── finetune.sh                 #    Complete finetuning pipeline
+|       ├── finetune_classifier.sh      #    Train classifier only
+|       └── finetune_tool_adaptors.sh   #    Train tool adapters only
 │
 ├── inference/agentflux/                # ⚡ AgentFlux Inference System
 │   ├── agentflux/
@@ -167,28 +172,22 @@ AgentFlux/
 │   │   └── utils/logging_setup.py      #    Logging configuration
 │   └── pyproject.toml                  #    Package configuration
 │
-├── orchestration-framework/            # 🔬 Evaluation Infrastructure
-│   ├── rena-core/                      #    Core orchestration framework
-│   │   ├── rena-browserd/              #    Rust: Process & Docker management
-│   │   │   ├── browserd/               #       Core library
-│   │   │   ├── browserd-cli/           #       CLI interface
-│   │   │   └── browserd-eval/          #       Evaluation harness
-│   │   └── rena-runtime/               #    Python: MCP protocol execution
-│   ├── evaluation/                     #    Evaluation scripts
-│   │   ├── run_agentflux.py            #    Run with AgentFlux proxy
-│   │   ├── run_baseline.py             #    Run with baseline GPT
-│   │   ├── gen_queries.py              #    Generate test queries
-│   │   ├── score.py                    #    Calculate final metrics
-│   │   ├── filesys/judge.py            #    Filesystem category judge
-│   │   ├── monday/judge.py             #    Monday.com category judge
-│   │   └── notion/judge.py             #    Notion category judge
-│   └── __init__.py                     #    Helper functions
-│
-└── bash/                               # 🔧 Automation Scripts
-    ├── finetune.sh                     #    Complete finetuning pipeline
-    ├── finetune_classifier.sh          #    Train classifier only
-    ├── finetune_tool_adaptors.sh       #    Train tool adapters only
-    └── evaluate.sh                     #    Complete evaluation pipeline
+└── orchestration-framework/            # 🔬 Evaluation Infrastructure
+    ├── rena-core/                      #    Core orchestration framework
+    │   ├── rena-browserd/              #    Rust: Process & Docker management
+    │   │   ├── browserd/               #       Core library
+    │   │   ├── browserd-cli/           #       CLI interface
+    │   │   └── browserd-eval/          #       Evaluation harness
+    │   └── rena-runtime/               #    Python: MCP protocol execution
+    ├── evaluation/                     #    Evaluation scripts
+    │   ├── run_agentflux.py            #    Run with AgentFlux proxy
+    │   ├── run_baseline.py             #    Run with baseline GPT
+    │   ├── gen_queries.py              #    Generate test queries
+    │   ├── score.py                    #    Calculate final metrics
+    │   ├── filesys/judge.py            #    Filesystem category judge
+    │   ├── monday/judge.py             #    Monday.com category judge
+    │   └── notion/judge.py             #    Notion category judge
+    └── __init__.py                     #    Helper functions
 ```
 
 ---

@@ -4,6 +4,9 @@ category=${1:-filesys}
 batch_size=${2:-4}
 accumulate_step=${3:-4}
 num_train_epochs=${4:-4}
+base_model=${5:-unsloth/Qwen2.5-7B-Instruct}
+base_model_folder=${6:-./base_models/Qwen2.5-7B-Instruct}
+
 
 train_dir="./$category/results/trajectories/train/tool_adaptors"
 for file in "$train_dir"/*.jsonl; do
@@ -12,7 +15,7 @@ for file in "$train_dir"/*.jsonl; do
 
   train_json_file_path="./$category/results/trajectories/train/tool_adaptors/$tool_name.jsonl"
   eval_json_file_path="./$category/results/trajectories/eval/tool_adaptors/$tool_name.jsonl"
-  chat_template_path="./base_models/Qwen2.5-7B-Instruct/$category/$tool_name.jinja"
+  chat_template_path="$base_model_folder/$category/$tool_name.jinja"
   output_dir="./$category/results/finetune_output/tool_adaptors/$tool_name"
   log_file_path="./$category/results/log/tool_adaptors/$tool_name.log"
 
@@ -30,7 +33,7 @@ for file in "$train_dir"/*.jsonl; do
 
   export PYTHONUNBUFFERED=1
   python unsloth-cli-split.py \
-    --model_name unsloth/Qwen2.5-7B-Instruct \
+    --model_name $base_model \
     --max_seq_length 32768 \
     --r 32 \
     --lora_alpha 64 \

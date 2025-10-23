@@ -3,8 +3,11 @@
 port=8010
 export CUDA_VISIBLE_DEVICES=7
 
+# base model to be used
+base_model=${1:-"unsloth/Qwen2.5-7B-Instruct"}
+
 # filesys
-finetune_serve_dir=${1:-"../finetune/filesys/results/finetune_serve/"}
+finetune_serve_dir=${2:-"../finetune/filesys/results/finetune_serve/"}
 
 filesys_classifier=$finetune_serve_dir/classifier
 read_file="$finetune_serve_dir/read_file"
@@ -21,7 +24,7 @@ list_directory_with_sizes="$finetune_serve_dir/list_directory_with_sizes"
 search_files="$finetune_serve_dir/search_files"
 
 vllm serve \
- unsloth/Qwen2.5-7B-Instruct \
+ $base_model \
  --enforce-eager \
  --enable-auto-tool-choice \
  --tool-call-parser hermes \
