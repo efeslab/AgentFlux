@@ -11,7 +11,8 @@
 [Features](#-key-features) •
 [Architecture](#-architecture) •
 [Quick Start](#-quick-start) •
-[Documentation](#-documentation) •
+[ConsumerBench](#-consumerbench) •
+[Documentation](#-documentation)
 
 </div>
 
@@ -158,11 +159,11 @@ AgentFlux/
 │   ├── classifier.jinja                #    Chat template for classifier model
 │   ├── tool_template.jinja             #    Chat template for tool adapters
 │   ├── results/                        #    Training outputs, logs, model checkpoints
-│   ├── base_models/                    #    Base-model-specific chat templates
-|   └── scripts/                        # 🔧 Automation Scripts 
-|       ├── finetune.sh                 #    Complete finetuning pipeline
-|       ├── finetune_classifier.sh      #    Train classifier only
-|       └── finetune_tool_adaptors.sh   #    Train tool adapters only
+│   ├── base_models/                    #    Base-model-specific chat templatos
+│   └── scripts/                        # 🔧 Automation Scripts 
+│       ├── finetune.sh                 #    Complete finetuning pipeline
+│       ├── finetune_classifier.sh      #    Train classifier onlg
+│       └── finetune_tool_adaptors.sh   #    Train tool adapters only
 │
 ├── inference/agentflux/                # ⚡ AgentFlux Inference System
 │   ├── agentflux/
@@ -172,25 +173,25 @@ AgentFlux/
 │   │   └── utils/logging_setup.py      #    Logging configuration
 │   └── pyproject.toml                  #    Package configuration
 │
-└── orchestration-framework/            # 🔬 Evaluation Infrastructure
-    ├── rena-core/                      #    Core orchestration framework
-    │   ├── rena-browserd/              #    Rust: Process & Docker management
-    │   │   ├── browserd/               #       Core library
-    │   │   ├── browserd-cli/           #       CLI interface
-    │   │   └── browserd-eval/          #       Evaluation harness
-    │   └── rena-runtime/               #    Python: MCP protocol execution
-    ├── evaluation/                     #    Evaluation scripts
-    │   ├── run_agentflux.py            #    Run with AgentFlux proxy
-    │   ├── run_baseline.py             #    Run with baseline GPT
-    │   ├── gen_queries.py              #    Generate test queries
-    │   ├── score.py                    #    Calculate final metrics
-    │   ├── filesys/judge.py            #    Filesystem category judge
-    │   ├── monday/judge.py             #    Monday.com category judge
-    │   └── notion/judge.py             #    Notion category judge
-    └── __init__.py                     #    Helper functions
+├── orchestration-framework/            # 🔬 Evaluation Infrastructure
+│   ├── rena-core/                      #    Core orchestration framework
+│   │   ├── rena-browserd/              #    Rust: Process & Docker management
+│   │   │   ├── browserd/               #       Core library
+│   │   │   ├── browserd-cli/           #       CLI interface
+│   │   │   └── browserd-eval/          #       Evaluation harness
+│   │   └── rena-runtime/               #    Python: MCP protocol execution
+│   ├── evaluation/                     #    Evaluation scripts
+│   │   ├── run_agentflux.py            #    Run with AgentFlux proxy
+│   │   ├── run_baseline.py             #    Run with baseline GPT
+│   │   ├── gen_queries.py              #    Generate test queries
+│   │   ├── score.py                    #    Calculate final metrics
+│   │   ├── filesys/judge.py            #    Filesystem category judge
+│   │   ├── monday/judge.py             #    Monday.com category judge
+│   │   └── notion/judge.py             #    Notion category judge
+│   └── __init__.py                     #    Helper functions
+│
+└── ConsumerBench                       #    Benchmarking framework for measuring system efficiency
 ```
-
----
 
 ## 🎬 Quick Start
 
@@ -371,6 +372,11 @@ python orchestration-framework/evaluation/filesys/judge.py \
 python orchestration-framework/evaluation/score.py \
   --llm_judge_path orchestration-framework/evaluation/filesys/judge-results/judged.jsonl
 ```
+---
+
+## 🚀 ConsumerBench
+
+ConsumerBench is a benchmarking framework that can be used to measure the system efficiency of local AI models when run concurrently with each other. ConsumerBench supports MCP workflows and computes the system efficiency, GPU utilization and power consumption of DualTune workflows. 
 
 ---
 
