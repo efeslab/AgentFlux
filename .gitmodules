@@ -1,0 +1,3 @@
+[submodule "ConsumerBench"]
+	path = ConsumerBench
+	url = https://github.com/efeslab/ConsumerBench.git
