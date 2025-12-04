@@ -10,6 +10,7 @@
 
 [Features](#-key-features) •
 [Architecture](#-architecture) •
+[Demo](#-demo) •
 [Quick Start](#-quick-start) •
 [ConsumerBench](#-consumerbench) •
 [Documentation](#-documentation)
@@ -192,6 +193,16 @@ AgentFlux/
 │
 └── ConsumerBench                       #    Benchmarking framework for measuring system efficiency
 ```
+
+---
+
+## 🎥 Demo
+
+See AgentFlux in action powering a Coinbase trading agent:
+
+[demos/agentflux-coinbase-demo.mp4](demos/agentflux-coinbase-demo.mp4)
+
+---
 
 ## 🎬 Quick Start
 
